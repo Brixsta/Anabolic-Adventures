@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=Alexandria&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.wrapper {
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+  height: 100%;
+  width: 100%;
+  background-color: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board {
+  height: 800px;
+  width: 800px;
+  min-height: 800px;
+  min-width: 800px;
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.tile {
+  height: 20%;
+  width: 20%;
+  border: solid black 1px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  font-size: 40px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  user-select: none;
+}
+
+.tile-title {
+  width: 100%;
+  height: 30px;
+  background-color: black;
+  z-index: 1000;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-family: "Alexandria", sans-serif;
+}
+
+.sprite {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  background-color: red;
+  border-radius: 50%;
+}
+
+.counter-top {
+  height: 480px;
+  width: 480px;
+  left: 160px;
+  top: 160px;
+  position: absolute;
+  border: solid 1px black;
+  background-image: url("./images/table.png");
+  background-size: cover;
+}
+
+.phone {
+  position: absolute;
+  height: 230px;
+  width: 170px;
+  left: 420px;
+  top: 200px;
+  background-image: url("./images/phone.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transform: rotate(-10deg);
+  border: none;
+  background-color: transparent;
+}
+
+.phone:hover {
+  cursor: pointer;
+}
