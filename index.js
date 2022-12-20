@@ -88,10 +88,10 @@ class Game {
     const tiles = document.querySelectorAll(".tile");
 
     // Jordan Peterson tile
-    tiles[0].style.backgroundImage = "url('images/jordan.png')";
+    tiles[0].style.backgroundImage = "url('images/goggins.png')";
 
     // Greg Doucette tile
-    tiles[3].style.backgroundImage = "url('images/greg.png')";
+    tiles[3].style.backgroundImage = "url('images/athlean.png')";
 
     // Sarms Goblin tile
     tiles[4].style.backgroundImage = "url('images/goblin.png')";
@@ -109,7 +109,7 @@ class Game {
     tiles[20].style.backgroundImage = "url('images/tren.png')";
 
     // AthleanX title
-    tiles[21].style.backgroundImage = "url('images/athlean.png')";
+    tiles[21].style.backgroundImage = "url('images/greg.png')";
 
     // Mom's basement tile
     tiles[24].style.backgroundImage = "url('images/basement.png')";
@@ -138,25 +138,35 @@ class Game {
 
       // only append titles where necessary
       if (
-        i !== 2 &&
         i !== 6 &&
         i !== 7 &&
         i !== 8 &&
-        i !== 10 &&
         i !== 11 &&
         i !== 12 &&
         i !== 13 &&
-        i !== 14 &&
         i !== 16 &&
         i !== 17 &&
-        i !== 18 &&
-        i !== 22
+        i !== 18
       ) {
         tiles[i].appendChild(tileTitle);
 
-        // apply text to fake natty tile
+        // apply text to Synthohl Scenarios
+        if (tiles[2].children[0]) {
+          tiles[2].children[0].innerHTML = "Steroid Scenarios";
+        }
+        if (tiles[10].children[0]) {
+          tiles[10].children[0].innerHTML = "Steroid Scenarios";
+        }
+        if (tiles[14].children[0]) {
+          tiles[14].children[0].innerHTML = "Steroid Scenarios";
+        }
+        if (tiles[22].children[0]) {
+          tiles[22].children[0].innerHTML = "Steroid Scenarios";
+        }
+
+        // apply text Drink Goggin's Sweat tile
         if (tiles[0].children[0]) {
-          tiles[0].children[0].innerHTML = "JP Gives Birth";
+          tiles[0].children[0].innerHTML = "Drink Goggin's Sweat";
         }
 
         // apply text to fake natty tile
@@ -166,7 +176,7 @@ class Game {
 
         // apply text to greg doucette speaks
         if (tiles[3].children[0]) {
-          tiles[3].children[0].innerHTML = "Greg Doucette Speaks";
+          tiles[3].children[0].innerHTML = "Athlean-X Magic Show";
         }
 
         // apply text to sarms goblin
@@ -191,7 +201,7 @@ class Game {
 
         // apply text to toad tile
         if (tiles[19].children[0]) {
-          tiles[19].children[0].innerHTML = "Hulkster's Blessing";
+          tiles[19].children[0].innerHTML = "Hulkster's Proposal";
         }
 
         // apply text to basement tile
@@ -201,7 +211,7 @@ class Game {
 
         // apply text to basement tile
         if (tiles[21].children[0]) {
-          tiles[21].children[0].innerHTML = "Athlean-X Magic Show";
+          tiles[21].children[0].innerHTML = "Greg Doucette Speaks";
         }
 
         // apply text to preworkout tile
