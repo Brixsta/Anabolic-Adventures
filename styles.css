@@ -74,13 +74,14 @@
   border: solid 1px black;
   background-image: url("./images/counter-top.png");
   background-size: cover;
+  overflow: hidden;
 }
 
 .phone {
   position: absolute;
   height: 230px;
   width: 170px;
-  left: 450px;
+  left: 470px;
   top: 380px;
   background-image: url("./images/phone.png");
   background-size: contain;
@@ -93,4 +94,50 @@
 
 .phone:hover {
   cursor: pointer;
+}
+
+.journal {
+  height: 400px;
+  width: 300px;
+  background-image: url("./images/journal.png");
+  position: absolute;
+  background-size: contain;
+  top: 220px;
+  left: -20px;
+  transform: rotate(10deg);
+  background-color: transparent;
+  background-repeat: no-repeat;
+}
+
+.dice-container {
+  position: absolute;
+  height: 100px;
+  width: 120px;
+  bottom: 30px;
+  left: 50px;
+  background-color: transparent;
+  border: none;
+}
+
+.dice-container:hover {
+  cursor: pointer;
+}
+
+.dice-one {
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  background-image: url("./images/dice-1.png");
+  background-size: cover;
+  animation-timing-function: ease-in;
+}
+
+.dice-two {
+  height: 50px;
+  width: 50px;
+  left: 60px;
+  position: absolute;
+  background-image: url("./images/dice-4.png");
+  background-size: cover;
+  animation-timing-function: ease-in;
 }

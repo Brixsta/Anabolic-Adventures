@@ -1,3 +1,7 @@
+const gameStats = {
+  movesLeft: null,
+};
+
 class Player {
   constructor() {
     this.x = 55;
@@ -93,10 +97,10 @@ class Game {
     // Greg Doucette tile
     tiles[3].style.backgroundImage = "url('images/athlean.png')";
 
-    // Sarms Goblin tile
-    tiles[4].style.backgroundImage = "url('images/goblin.png')";
+    // Drug Bust tile
+    tiles[4].style.backgroundImage = "url('images/drugbust.png')";
 
-    // Sarms Goblin tile
+    // Arnold Hires Your Mom tile
     tiles[5].style.backgroundImage = "url('images/arnold.png')";
 
     // Larry Wheels tile
@@ -181,7 +185,7 @@ class Game {
 
         // apply text to sarms goblin
         if (tiles[4].children[0]) {
-          tiles[4].children[0].innerHTML = "SARMS Goblin Attack";
+          tiles[4].children[0].innerHTML = "Drug Bust";
         }
 
         // apply text to ex gf deletes insta
@@ -240,6 +244,83 @@ class Game {
     const phone = document.createElement("button");
     phone.classList.add("phone");
     board.appendChild(phone);
+
+    const journal = document.createElement("div");
+    journal.classList.add("journal");
+    counterTop.appendChild(journal);
+
+    const diceContainer = document.createElement("button");
+    diceContainer.classList.add("dice-container");
+    counterTop.appendChild(diceContainer);
+
+    const diceOne = document.createElement("div");
+    diceOne.classList.add("dice-one");
+    diceContainer.appendChild(diceOne);
+
+    const diceTwo = document.createElement("div");
+    diceTwo.classList.add("dice-two");
+    diceContainer.appendChild(diceTwo);
+
+    diceContainer.addEventListener("click", () => {
+      this.rollDice();
+    });
+  }
+
+  rollDice() {
+    const diceSounds = [
+      new Audio("./Dice-Sound-One.wav"),
+      new Audio("./Dice-Sound-Two.wav"),
+      new Audio("./Dice-Sound-Three.wav"),
+    ];
+    diceSounds[Math.floor(Math.random() * 3)].play();
+    const diceContainer = document.querySelector(".dice-container");
+    const firstRandomNumber = Math.floor(Math.random() * 6) + 1;
+    const SecondRandomNumber = Math.floor(Math.random() * 6) + 1;
+
+    gameStats.movesLeft = firstRandomNumber + SecondRandomNumber;
+    console.log(gameStats.movesLeft);
+
+    // diceContainer.disabled = true;
+
+    const diceOne = document.querySelector(".dice-one");
+    const diceTwo = document.querySelector(".dice-two");
+
+    const diceShakeOne = [
+      { transform: `translate(0px, ${Math.floor(Math.random() * 15) + 5}px)` },
+      { transform: `translate(${Math.floor(Math.random() * 15) + 5}px, 0px)` },
+      {
+        transform: `translate(0px, ${Math.floor(Math.random() * -15) + -5}px)`,
+      },
+      {
+        transform: `translate(${Math.floor(Math.random() * -15) + -5}px, 0px)`,
+      },
+      { transform: `translate(0px, ${Math.floor(Math.random() * 15) + 5}px)` },
+    ];
+
+    const diceShakeTwo = [
+      { transform: `translate(0px, ${Math.floor(Math.random() * 15) + 5}px)` },
+      { transform: `translate(${Math.floor(Math.random() * 15) + 5}px, 0px)` },
+      {
+        transform: `translate(0px, ${Math.floor(Math.random() * -15) + -5}px)`,
+      },
+      {
+        transform: `translate(${Math.floor(Math.random() * -15) + -5}px, 0px)`,
+      },
+      { transform: `translate(0px, ${Math.floor(Math.random() * 15) + 5}px)` },
+    ];
+
+    const diceTiming = {
+      duration: 200,
+      iterations: 2,
+    };
+
+    diceOne.animate(diceShakeOne, diceTiming);
+    diceTwo.animate(diceShakeTwo, diceTiming);
+
+    setTimeout(() => {
+      diceOne.style.backgroundImage = `url(images/dice-${firstRandomNumber}.png)`;
+      diceTwo.style.backgroundImage = `url(images/dice-${SecondRandomNumber}.png)`;
+    }, 400);
   }
 }
 
