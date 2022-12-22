@@ -1,5 +1,6 @@
 const gameStats = {
   movesLeft: null,
+  theme: new Audio("./Theme.wav"),
 };
 
 class Player {
@@ -267,6 +268,11 @@ class Game {
   }
 
   rollDice() {
+    setTimeout(() => {
+      gameStats.theme.volume = 1;
+      gameStats.theme.play();
+    }, 500);
+
     const diceSounds = [
       new Audio("./Dice-Sound-One.wav"),
       new Audio("./Dice-Sound-Two.wav"),
@@ -278,35 +284,34 @@ class Game {
     const SecondRandomNumber = Math.floor(Math.random() * 6) + 1;
 
     gameStats.movesLeft = firstRandomNumber + SecondRandomNumber;
-    console.log(gameStats.movesLeft);
 
-    // diceContainer.disabled = true;
+    diceContainer.disabled = true;
 
     const diceOne = document.querySelector(".dice-one");
     const diceTwo = document.querySelector(".dice-two");
 
     const diceShakeOne = [
       { transform: `translate(0px, ${Math.floor(Math.random() * 15) + 5}px)` },
-      { transform: `translate(${Math.floor(Math.random() * 15) + 5}px, 0px)` },
+      { transform: `translate(${Math.floor(Math.random() * 8) + 5}px, 0px)` },
       {
         transform: `translate(0px, ${Math.floor(Math.random() * -15) + -5}px)`,
       },
       {
-        transform: `translate(${Math.floor(Math.random() * -15) + -5}px, 0px)`,
+        transform: `translate(${Math.floor(Math.random() * -19) + -5}px, 0px)`,
       },
-      { transform: `translate(0px, ${Math.floor(Math.random() * 15) + 5}px)` },
+      { transform: `translate(0px, ${Math.floor(Math.random() * 11) + 5}px)` },
     ];
 
     const diceShakeTwo = [
       { transform: `translate(0px, ${Math.floor(Math.random() * 15) + 5}px)` },
-      { transform: `translate(${Math.floor(Math.random() * 15) + 5}px, 0px)` },
+      { transform: `translate(${Math.floor(Math.random() * 13) + 5}px, 0px)` },
       {
-        transform: `translate(0px, ${Math.floor(Math.random() * -15) + -5}px)`,
+        transform: `translate(0px, ${Math.floor(Math.random() * -17) + -5}px)`,
       },
       {
         transform: `translate(${Math.floor(Math.random() * -15) + -5}px, 0px)`,
       },
-      { transform: `translate(0px, ${Math.floor(Math.random() * 15) + 5}px)` },
+      { transform: `translate(0px, ${Math.floor(Math.random() * 19) + 5}px)` },
     ];
 
     const diceTiming = {
@@ -320,7 +325,97 @@ class Game {
     setTimeout(() => {
       diceOne.style.backgroundImage = `url(images/dice-${firstRandomNumber}.png)`;
       diceTwo.style.backgroundImage = `url(images/dice-${SecondRandomNumber}.png)`;
+
+      setTimeout(() => {
+        this.moveSprite();
+      }, 300);
     }, 400);
+  }
+
+  moveSprite() {
+    console.log(gameStats.theme.volume);
+
+    // stop theme music, re-enable dice
+    if (gameStats.movesLeft === 0) {
+      gameStats.theme.pause();
+      gameStats.theme.currentTime = 0;
+      const diceContainer = document.querySelector(".dice-container");
+      diceContainer.disabled = false;
+      gameStats.theme.volume = 1;
+      return;
+    }
+    // reduce volume of theme music
+    if (gameStats.movesLeft === 2 && gameStats.theme.volume > 0) {
+      let reduceVolume = setInterval(() => {
+        gameStats.theme.volume -= 0.25;
+      }, 200);
+      setTimeout(() => {
+        clearInterval(reduceVolume);
+      }, 900);
+    }
+
+    const sprite = document.querySelector(".sprite");
+
+    let spriteX = sprite.style.right;
+    let spriteY = sprite.style.bottom;
+
+    // check if the player has moves left
+    if (gameStats.movesLeft > 0) {
+      // START OF FIRST ROW
+      if (spriteX === "55px" && spriteY === "70px") {
+        sprite.style.right = "215px";
+        spriteX = "215px";
+      } else if (spriteX === "215px" && spriteY === "70px") {
+        sprite.style.right = "375px";
+        spriteX = "375px";
+      } else if (spriteX === "375px" && spriteY === "70px") {
+        sprite.style.right = "535px";
+        spriteX = "535px";
+      } else if (spriteX === "535px" && spriteY === "70px") {
+        sprite.style.right = "695px";
+        spriteX = "695px";
+      } else if (spriteX === "695px" && spriteY === "70px") {
+        sprite.style.bottom = "230px";
+        spriteY = "230px"; // END OF BOTTOM ROW
+      } else if (spriteX === "695px" && spriteY === "230px") {
+        sprite.style.bottom = "390px";
+        spriteY = "390px";
+      } else if (spriteX === "695px" && spriteY === "390px") {
+        sprite.style.bottom = "550px";
+        spriteY = "550px";
+      } else if (spriteX === "695px" && spriteY === "550px") {
+        sprite.style.bottom = "710px";
+        spriteY = "710px"; // END OF LEFT COLUMN
+      } else if (spriteX === "695px" && spriteY === "710px") {
+        sprite.style.right = "535px";
+        spriteX = "535px";
+      } else if (spriteX === "535px" && spriteY === "710px") {
+        sprite.style.right = "375px";
+        spriteX = "375px";
+      } else if (spriteX === "375px" && spriteY === "710px") {
+        sprite.style.right = "215px";
+        spriteX = "215px";
+      } else if (spriteX === "215px" && spriteY === "710px") {
+        sprite.style.right = "55px";
+        spriteX = "55px"; // END OF TOP ROW
+      } else if (spriteX === "55px" && spriteY === "710px") {
+        sprite.style.bottom = "550px";
+        spriteY = "550px";
+      } else if (spriteX === "55px" && spriteY === "550px") {
+        sprite.style.bottom = "390px";
+        spriteY = "390px";
+      } else if (spriteX === "55px" && spriteY === "390px") {
+        sprite.style.bottom = "230px";
+        spriteY = "230px";
+      } else if (spriteX === "55px" && spriteY === "230px") {
+        sprite.style.bottom = "70px";
+        spriteY = "70px";
+      }
+    }
+    gameStats.movesLeft -= 1;
+    setTimeout(() => {
+      this.moveSprite();
+    }, 800);
   }
 }
 
