@@ -55,6 +55,24 @@
   align-items: center;
   font-size: 12px;
   font-family: "Alexandria", sans-serif;
+  transition: all 0.2s ease-in-out;
+}
+
+.active-tile {
+  box-shadow: 0px 0px 10px 10px #ff19a3;
+  z-index: 20000;
+  transition: all 0.5s ease;
+  position: relative;
+}
+
+.active-tile::before {
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 100%;
+  background-color: #ff19a3;
+  opacity: 0.6;
+  transition: all 0.5s ease;
 }
 
 .sprite {
@@ -63,7 +81,7 @@
   width: 50px;
   background-color: yellow;
   transition: all 0.5s ease;
-  z-index: 5000;
+  z-index: 25000;
 }
 
 .counter-top {

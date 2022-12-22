@@ -1,21 +1,45 @@
 const gameStats = {
   movesLeft: null,
   theme: new Audio("./Theme.wav"),
+  gameStarted: false,
 };
 
-class Player {
-  constructor() {
-    this.x = 55;
-    this.y = 70;
-    const sprite = document.createElement("div");
-    sprite.classList.add("sprite");
-    const board = document.querySelector(".board");
-    board.appendChild(sprite);
+// collision detection function
+const isCollide = (x, y) => {
+  return !(
+    x.bottom < y.top ||
+    x.top > y.bottom ||
+    x.right < y.left ||
+    x.left > y.right
+  );
+};
 
-    sprite.style.bottom = this.y + "px";
-    sprite.style.right = this.x + "px";
-  }
-}
+// check if sprite collides with tile
+const highlightActiveTile = () => {
+  const tiles = document.querySelectorAll(".tile");
+  const sprite = document.querySelector(".sprite");
+
+  tiles.forEach((tile) => {
+    let tileRect = tile.getBoundingClientRect();
+    let spriteRect = sprite.getBoundingClientRect();
+
+    let collisionDetected = isCollide(tileRect, spriteRect);
+
+    if (collisionDetected && gameStats.gameStarted && tile.children[0]) {
+      tile.classList.add("active-tile");
+      tile.children[0].style.backgroundColor = "#ff19a3";
+    } else {
+      if (tile.children[0]) {
+        tile.classList.remove("active-tile");
+        tile.children[0].style.backgroundColor = "black";
+      }
+    }
+  });
+
+  window.requestAnimationFrame(highlightActiveTile);
+};
+
+window.requestAnimationFrame(highlightActiveTile);
 
 class Game {
   constructor() {
@@ -233,7 +257,13 @@ class Game {
   }
 
   createPlayer() {
-    const player = new Player();
+    const sprite = document.createElement("div");
+    sprite.classList.add("sprite");
+    const board = document.querySelector(".board");
+    board.appendChild(sprite);
+
+    sprite.style.bottom = "70px";
+    sprite.style.right = "55px";
   }
 
   createCounterTop() {
@@ -268,6 +298,7 @@ class Game {
   }
 
   rollDice() {
+    gameStats.gameStarted = true;
     setTimeout(() => {
       gameStats.theme.volume = 1;
       gameStats.theme.play();
@@ -333,8 +364,6 @@ class Game {
   }
 
   moveSprite() {
-    console.log(gameStats.theme.volume);
-
     // stop theme music, re-enable dice
     if (gameStats.movesLeft === 0) {
       gameStats.theme.pause();
