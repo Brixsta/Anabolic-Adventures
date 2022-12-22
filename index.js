@@ -1,6 +1,7 @@
 const gameStats = {
+  initialRoll: null,
   movesLeft: null,
-  theme: new Audio("./Theme.wav"),
+  ambientTheme: new Audio("Ambient-Theme.wav"),
   gameStarted: false,
 };
 
@@ -26,8 +27,11 @@ const highlightActiveTile = () => {
     let collisionDetected = isCollide(tileRect, spriteRect);
 
     if (collisionDetected && gameStats.gameStarted && tile.children[0]) {
+      // highlight active tile
       tile.classList.add("active-tile");
       tile.children[0].style.backgroundColor = "#ff19a3";
+
+      gameStats.activeTile = tile;
     } else {
       if (tile.children[0]) {
         tile.classList.remove("active-tile");
@@ -298,11 +302,9 @@ class Game {
   }
 
   rollDice() {
+    gameStats.ambientTheme.play();
+    gameStats.ambientTheme.loop = true;
     gameStats.gameStarted = true;
-    setTimeout(() => {
-      gameStats.theme.volume = 1;
-      gameStats.theme.play();
-    }, 500);
 
     const diceSounds = [
       new Audio("./Dice-Sound-One.wav"),
@@ -315,6 +317,25 @@ class Game {
     const SecondRandomNumber = Math.floor(Math.random() * 6) + 1;
 
     gameStats.movesLeft = firstRandomNumber + SecondRandomNumber;
+    gameStats.initialRoll = firstRandomNumber + SecondRandomNumber;
+
+    // sound effect based on roll
+    if (gameStats.initialRoll === 2) {
+      const ohMyGod = new Audio("Oh-My-God.wav");
+      ohMyGod.play();
+    } else if (gameStats.initialRoll === 5) {
+      const cringe = new Audio("Cringe.wav");
+      cringe.play();
+    } else if (gameStats.initialRoll === 6) {
+      const trash = new Audio("Trash.wav");
+      trash.play();
+    } else if (gameStats.initialRoll === 7) {
+      const dont = new Audio("Dont.wav");
+      dont.play();
+    } else if (gameStats.initialRoll === 8) {
+      const Scooby = new Audio("Scooby.wav");
+      Scooby.play();
+    }
 
     diceContainer.disabled = true;
 
@@ -364,23 +385,11 @@ class Game {
   }
 
   moveSprite() {
-    // stop theme music, re-enable dice
+    // re enable dice
     if (gameStats.movesLeft === 0) {
-      gameStats.theme.pause();
-      gameStats.theme.currentTime = 0;
       const diceContainer = document.querySelector(".dice-container");
       diceContainer.disabled = false;
-      gameStats.theme.volume = 1;
       return;
-    }
-    // reduce volume of theme music
-    if (gameStats.movesLeft === 2 && gameStats.theme.volume > 0) {
-      let reduceVolume = setInterval(() => {
-        gameStats.theme.volume -= 0.25;
-      }, 200);
-      setTimeout(() => {
-        clearInterval(reduceVolume);
-      }, 900);
     }
 
     const sprite = document.querySelector(".sprite");
@@ -445,6 +454,11 @@ class Game {
     setTimeout(() => {
       this.moveSprite();
     }, 800);
+
+    // play tile hover sound
+    const tileHoverSound = new Audio("Tile-Sound.mp3");
+    tileHoverSound.volume = 0.03;
+    tileHoverSound.play();
   }
 }
 
