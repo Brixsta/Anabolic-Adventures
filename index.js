@@ -1,7 +1,7 @@
 const gameState = {
   initialRoll: null,
   movesLeft: null,
-  ambientTheme: new Audio("./Ambient-Theme.wav"),
+  ambientTheme: new Audio("./audio/theme.wav"),
   gameStarted: false,
 };
 
@@ -306,18 +306,18 @@ class Game {
     gameState.ambientTheme.loop = true;
     gameState.gameStarted = true;
 
-    const rollDiceSound = new Audio("./Dice-Sound-One.wav");
+    const rollDiceSound = new Audio("./audio/dice.wav");
     rollDiceSound.play();
 
     const diceButton = document.querySelector(".dice-button");
     const firstRandomNumber = Math.floor(Math.random() * 6) + 1;
     const SecondRandomNumber = Math.floor(Math.random() * 6) + 1;
 
-    // gameState.movesLeft = firstRandomNumber + SecondRandomNumber;
-    // gameState.initialRoll = firstRandomNumber + SecondRandomNumber;
+    gameState.movesLeft = firstRandomNumber + SecondRandomNumber;
+    gameState.initialRoll = firstRandomNumber + SecondRandomNumber;
 
-    gameState.movesLeft = 1;
-    gameState.initialRoll = 1;
+    // gameState.movesLeft = 1;
+    // gameState.initialRoll = 1;
 
     this.playRandomVoiceLine();
 
@@ -441,40 +441,52 @@ class Game {
     }, 800);
 
     // play tile hover sound
-    const tileHoverSound = new Audio("Tile-Sound.mp3");
+    const tileHoverSound = new Audio("./audio/tile.mp3");
     tileHoverSound.volume = 0.03;
     tileHoverSound.play();
   }
 
   playRandomVoiceLine() {
-    const voices = [
-      new Audio("Scooby.wav"),
-      new Audio("Yes.wav"),
-      new Audio("Shut.wav"),
-      new Audio("Burger.wav"),
-      new Audio("Breakfast.wav"),
-      new Audio("Jackson.wav"),
-      new Audio("Brain.wav"),
-      new Audio("Nerd.wav"),
-      new Audio("Oh-My-God.wav"),
-      new Audio("Cringe.wav"),
-      new Audio("Trash.wav"),
-      new Audio("Dont.wav"),
-      new Audio("Gore.wav"),
+    const shortVoiceLines = [
+      new Audio("./audio/scooby.wav"),
+      new Audio("./audio/yes.wav"),
+      new Audio("./audio/jackson.wav"),
+      new Audio("./audio/playball.wav"),
+      new Audio("./audio/trash.wav"),
+      new Audio("./audio/cringe.wav"),
+      new Audio("./audio/brain.wav"),
+      new Audio("./audio/god.wav"),
+      new Audio("./audio/nerd.wav"),
+    ];
+    const mediumVoiceLines = [
+      new Audio("./audio/burger.wav"),
+      new Audio("./audio/breakfast.wav"),
+      new Audio("./audio/shut.wav"),
+      new Audio("./audio/dont.wav"),
+    ];
+    const longVoiceLines = [
+      new Audio("./audio/gore.wav"),
+      new Audio("./audio/fish.wav"),
+      new Audio("./audio/republic.wav"),
+      new Audio("./audio/relations.wav"),
     ];
 
-    const randomNum = Math.floor(Math.random() * voices.length);
-
-    if (gameState.initialRoll === 2) {
-      voices[0].play();
+    // determine which duration of voice line to use
+    if (gameState.initialRoll <= 3) {
+      const randomNum = Math.floor(Math.random() * shortVoiceLines.length);
+      shortVoiceLines[randomNum].play();
+    } else if (gameState.initialRoll > 3 && gameState.initialRoll < 8) {
+      const randomNum = Math.floor(Math.random() * mediumVoiceLines.length);
+      mediumVoiceLines[randomNum].play();
     } else {
-      voices[randomNum].play();
+      const randomNum = Math.floor(Math.random() * longVoiceLines.length);
+      longVoiceLines[randomNum].play();
     }
   }
 
   vibratePhone() {
     const phone = document.querySelector(".phone");
-    const vibrationSound = new Audio("./Vibrating-Phone.wav");
+    const vibrationSound = new Audio("./audio/vibrating.wav");
     phone.classList.add("vibrate-phone");
     vibrationSound.play();
 
