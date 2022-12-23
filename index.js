@@ -1,7 +1,7 @@
-const gameStats = {
+const gameState = {
   initialRoll: null,
   movesLeft: null,
-  ambientTheme: new Audio("Ambient-Theme.wav"),
+  ambientTheme: new Audio("./Ambient-Theme.wav"),
   gameStarted: false,
 };
 
@@ -26,12 +26,12 @@ const highlightActiveTile = () => {
 
     let collisionDetected = isCollide(tileRect, spriteRect);
 
-    if (collisionDetected && gameStats.gameStarted && tile.children[0]) {
+    if (collisionDetected && gameState.gameStarted && tile.children[0]) {
       // highlight active tile
       tile.classList.add("active-tile");
       tile.children[0].style.backgroundColor = "#ff19a3";
 
-      gameStats.activeTile = tile;
+      gameState.activeTile = tile;
     } else {
       if (tile.children[0]) {
         tile.classList.remove("active-tile");
@@ -51,7 +51,7 @@ class Game {
     this.createTiles();
     this.createTileTitles();
     this.paintTiles();
-    this.createPlayer();
+    this.createSprite();
     this.createCounterTop();
   }
 
@@ -147,7 +147,7 @@ class Game {
     // Mom's basement tile
     tiles[24].style.backgroundImage = "url('images/basement.png')";
 
-    // Syringe tile
+    // Steroid Scenarios tile
     tiles[2].style.backgroundImage = "url('images/syringe.png')";
     tiles[10].style.backgroundImage = "url('images/syringe.png')";
     tiles[14].style.backgroundImage = "url('images/syringe.png')";
@@ -202,57 +202,57 @@ class Game {
           tiles[0].children[0].innerHTML = "Drink Goggin's Sweat";
         }
 
-        // apply text to fake natty tile
+        // apply text to Fake Natty tile
         if (tiles[1].children[0]) {
           tiles[1].children[0].innerHTML = "Labeled Fake Natty";
         }
 
-        // apply text to greg doucette speaks
+        // apply text to Athlean-X Magic Show tile
         if (tiles[3].children[0]) {
           tiles[3].children[0].innerHTML = "Athlean-X Magic Show";
         }
 
-        // apply text to sarms goblin
+        // apply text to Drug Bust tile
         if (tiles[4].children[0]) {
           tiles[4].children[0].innerHTML = "Drug Bust";
         }
 
-        // apply text to ex gf deletes insta
+        // apply text to Arnold Hires Your Mom tile
         if (tiles[5].children[0]) {
           tiles[5].children[0].innerHTML = "Arnold Hires Your Mom";
         }
 
-        // apply text to ex gf deletes insta
+        // apply text to Train w/ Larry Wheels tile
         if (tiles[9].children[0]) {
           tiles[9].children[0].innerHTML = "Train w/ Larry Wheels";
         }
 
-        // apply text to joe rogaine tile
+        // apply text to DMT w/ Joe Rogan tile
         if (tiles[15].children[0]) {
           tiles[15].children[0].innerHTML = "DMT w/ Joe Rogan";
         }
 
-        // apply text to toad tile
+        // apply text to Hulkster's Proposal tile
         if (tiles[19].children[0]) {
           tiles[19].children[0].innerHTML = "Hulkster's Proposal";
         }
 
-        // apply text to basement tile
+        // apply text Tommy Tren Collab tile
         if (tiles[20].children[0]) {
           tiles[20].children[0].innerHTML = "Tommy Tren Collab";
         }
 
-        // apply text to basement tile
+        // apply text to Greg Doucette Speaks tile
         if (tiles[21].children[0]) {
           tiles[21].children[0].innerHTML = "Greg Doucette Speaks";
         }
 
-        // apply text to preworkout tile
+        // apply text to Low on Pre-Workout tile
         if (tiles[23].children[0]) {
           tiles[23].children[0].innerHTML = "Low on Pre-Workout";
         }
 
-        // apply text to basement tile
+        // apply text to Mom's Basement tile
         if (tiles[24].children[0]) {
           tiles[24].children[0].innerHTML = "Mom's Basement";
         }
@@ -260,7 +260,7 @@ class Game {
     }
   }
 
-  createPlayer() {
+  createSprite() {
     const sprite = document.createElement("div");
     sprite.classList.add("sprite");
     const board = document.querySelector(".board");
@@ -284,60 +284,44 @@ class Game {
     journal.classList.add("journal");
     counterTop.appendChild(journal);
 
-    const diceContainer = document.createElement("button");
-    diceContainer.classList.add("dice-container");
-    counterTop.appendChild(diceContainer);
+    const diceButton = document.createElement("button");
+    diceButton.classList.add("dice-button");
+    counterTop.appendChild(diceButton);
 
     const diceOne = document.createElement("div");
     diceOne.classList.add("dice-one");
-    diceContainer.appendChild(diceOne);
+    diceButton.appendChild(diceOne);
 
     const diceTwo = document.createElement("div");
     diceTwo.classList.add("dice-two");
-    diceContainer.appendChild(diceTwo);
+    diceButton.appendChild(diceTwo);
 
-    diceContainer.addEventListener("click", () => {
+    diceButton.addEventListener("click", () => {
       this.rollDice();
     });
   }
 
   rollDice() {
-    gameStats.ambientTheme.play();
-    gameStats.ambientTheme.loop = true;
-    gameStats.gameStarted = true;
+    gameState.ambientTheme.play();
+    gameState.ambientTheme.loop = true;
+    gameState.gameStarted = true;
 
-    const diceSounds = [
-      new Audio("./Dice-Sound-One.wav"),
-      new Audio("./Dice-Sound-Two.wav"),
-      new Audio("./Dice-Sound-Three.wav"),
-    ];
-    diceSounds[Math.floor(Math.random() * 3)].play();
-    const diceContainer = document.querySelector(".dice-container");
+    const rollDiceSound = new Audio("./Dice-Sound-One.wav");
+    rollDiceSound.play();
+
+    const diceButton = document.querySelector(".dice-button");
     const firstRandomNumber = Math.floor(Math.random() * 6) + 1;
     const SecondRandomNumber = Math.floor(Math.random() * 6) + 1;
 
-    gameStats.movesLeft = firstRandomNumber + SecondRandomNumber;
-    gameStats.initialRoll = firstRandomNumber + SecondRandomNumber;
+    // gameState.movesLeft = firstRandomNumber + SecondRandomNumber;
+    // gameState.initialRoll = firstRandomNumber + SecondRandomNumber;
 
-    // sound effect based on roll
-    if (gameStats.initialRoll === 2) {
-      const ohMyGod = new Audio("Oh-My-God.wav");
-      ohMyGod.play();
-    } else if (gameStats.initialRoll === 5) {
-      const cringe = new Audio("Cringe.wav");
-      cringe.play();
-    } else if (gameStats.initialRoll === 6) {
-      const trash = new Audio("Trash.wav");
-      trash.play();
-    } else if (gameStats.initialRoll === 7) {
-      const dont = new Audio("Dont.wav");
-      dont.play();
-    } else if (gameStats.initialRoll === 8) {
-      const Scooby = new Audio("Scooby.wav");
-      Scooby.play();
-    }
+    gameState.movesLeft = 1;
+    gameState.initialRoll = 1;
 
-    diceContainer.disabled = true;
+    this.playRandomVoiceLine();
+
+    diceButton.disabled = true;
 
     const diceOne = document.querySelector(".dice-one");
     const diceTwo = document.querySelector(".dice-two");
@@ -386,9 +370,10 @@ class Game {
 
   moveSprite() {
     // re enable dice
-    if (gameStats.movesLeft === 0) {
-      const diceContainer = document.querySelector(".dice-container");
-      diceContainer.disabled = false;
+    if (gameState.movesLeft === 0) {
+      this.playerLandsOnTile();
+      const diceButton = document.querySelector(".dice-button");
+      diceButton.disabled = false;
       return;
     }
 
@@ -398,7 +383,7 @@ class Game {
     let spriteY = sprite.style.bottom;
 
     // check if the player has moves left
-    if (gameStats.movesLeft > 0) {
+    if (gameState.movesLeft > 0) {
       // START OF FIRST ROW
       if (spriteX === "55px" && spriteY === "70px") {
         sprite.style.right = "215px";
@@ -450,7 +435,7 @@ class Game {
         spriteY = "70px";
       }
     }
-    gameStats.movesLeft -= 1;
+    gameState.movesLeft -= 1;
     setTimeout(() => {
       this.moveSprite();
     }, 800);
@@ -459,6 +444,64 @@ class Game {
     const tileHoverSound = new Audio("Tile-Sound.mp3");
     tileHoverSound.volume = 0.03;
     tileHoverSound.play();
+  }
+
+  playRandomVoiceLine() {
+    const voices = [
+      new Audio("Scooby.wav"),
+      new Audio("Yes.wav"),
+      new Audio("Shut.wav"),
+      new Audio("Burger.wav"),
+      new Audio("Breakfast.wav"),
+      new Audio("Jackson.wav"),
+      new Audio("Brain.wav"),
+      new Audio("Nerd.wav"),
+      new Audio("Oh-My-God.wav"),
+      new Audio("Cringe.wav"),
+      new Audio("Trash.wav"),
+      new Audio("Dont.wav"),
+      new Audio("Gore.wav"),
+    ];
+
+    const randomNum = Math.floor(Math.random() * voices.length);
+
+    if (gameState.initialRoll === 2) {
+      voices[0].play();
+    } else {
+      voices[randomNum].play();
+    }
+  }
+
+  vibratePhone() {
+    const phone = document.querySelector(".phone");
+    const vibrationSound = new Audio("./Vibrating-Phone.wav");
+    phone.classList.add("vibrate-phone");
+    vibrationSound.play();
+
+    const removeVibrateInterval = setInterval(() => {
+      phone.classList.remove("vibrate-phone");
+    }, 1200);
+
+    const addVibrateInterval = setInterval(() => {
+      phone.classList.add("vibrate-phone");
+      vibrationSound.play();
+    }, 2400);
+
+    // remove vibration effect when user clicks phone
+    phone.addEventListener("click", () => {
+      clearInterval(addVibrateInterval);
+      clearInterval(removeVibrateInterval);
+      phone.classList.remove("vibrate-phone");
+    });
+  }
+
+  playerLandsOnTile() {
+    const activeTile = document.querySelector(".active-tile");
+
+    // Pre-Workout tile event
+    if (parseInt(activeTile.id) === 23) {
+      this.vibratePhone();
+    }
   }
 }
 
