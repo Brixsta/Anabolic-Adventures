@@ -313,11 +313,11 @@ class Game {
     const firstRandomNumber = Math.floor(Math.random() * 6) + 1;
     const SecondRandomNumber = Math.floor(Math.random() * 6) + 1;
 
-    gameState.movesLeft = firstRandomNumber + SecondRandomNumber;
-    gameState.initialRoll = firstRandomNumber + SecondRandomNumber;
+    // gameState.movesLeft = firstRandomNumber + SecondRandomNumber;
+    // gameState.initialRoll = firstRandomNumber + SecondRandomNumber;
 
-    // gameState.movesLeft = 1;
-    // gameState.initialRoll = 1;
+    gameState.movesLeft = 1;
+    gameState.initialRoll = 1;
 
     this.playRandomVoiceLine();
 
@@ -463,12 +463,19 @@ class Game {
       new Audio("./audio/breakfast.wav"),
       new Audio("./audio/shut.wav"),
       new Audio("./audio/dont.wav"),
+      new Audio("./audio/outside.wav"),
+      new Audio("./audio/thatguy.wav"),
+      new Audio("./audio/dead.wav"),
+      new Audio("./audio/surprised.wav"),
     ];
     const longVoiceLines = [
       new Audio("./audio/gore.wav"),
       new Audio("./audio/fish.wav"),
       new Audio("./audio/republic.wav"),
       new Audio("./audio/relations.wav"),
+      new Audio("./audio/diabetes.wav"),
+      new Audio("./audio/lottery.wav"),
+      new Audio("./audio/mcmahon.wav"),
     ];
 
     // determine which duration of voice line to use
@@ -499,11 +506,23 @@ class Game {
       vibrationSound.play();
     }, 2400);
 
+    // fade background except for phone
+    const counterTop = document.querySelector(".counter-top");
+    counterTop.style.setProperty("--fadeBackground", ".2");
+    const journal = document.querySelector(".journal");
+    journal.style.opacity = 0.2;
+    const diceOne = document.querySelector(".dice-one");
+    const diceTwo = document.querySelector(".dice-two");
+    diceOne.style.opacity = 0.2;
+    diceTwo.style.opacity = 0.2;
+
+    // create alert message
+    const message = "Check your Phone Bro";
+    this.createAlertMessage(message);
+
     // remove vibration effect when user clicks phone
     phone.addEventListener("click", () => {
-      clearInterval(addVibrateInterval);
-      clearInterval(removeVibrateInterval);
-      phone.classList.remove("vibrate-phone");
+      this.handlePhoneClick(addVibrateInterval, removeVibrateInterval);
     });
   }
 
@@ -514,6 +533,46 @@ class Game {
     if (parseInt(activeTile.id) === 23) {
       this.vibratePhone();
     }
+  }
+
+  handlePhoneClick(interval1, interval2) {
+    const phone = document.querySelector(".phone");
+    const diceOne = document.querySelector(".dice-one");
+    const diceTwo = document.querySelector(".dice-two");
+    const journal = document.querySelector(".journal");
+    const counterTop = document.querySelector(".counter-top");
+    const alertMessageContainer = document.querySelector(
+      ".alert-message-container"
+    );
+    clearInterval(interval1);
+    clearInterval(interval2);
+    phone.classList.remove("vibrate-phone");
+
+    alertMessageContainer.remove();
+    diceOne.style.opacity = 1;
+    diceTwo.style.opacity = 1;
+    journal.style.opacity = 1;
+    counterTop.style.setProperty("--fadeBackground", "1");
+    phone.removeEventListener("click", phone);
+  }
+
+  createAlertMessage(message) {
+    const leftPill = document.createElement("img");
+    const rightPill = document.createElement("img");
+    leftPill.classList.add("pill");
+    rightPill.classList.add("pill");
+    leftPill.src = "./images/pill.png";
+    rightPill.src = "./images/pill.png";
+    rightPill.src = "./images/pill.png";
+    const alertMessageContainer = document.createElement("div");
+    alertMessageContainer.classList.add("alert-message-container");
+    const board = document.querySelector(".board");
+    const messageText = document.createElement("span");
+    messageText.innerText = message;
+    alertMessageContainer.appendChild(leftPill);
+    alertMessageContainer.appendChild(messageText);
+    alertMessageContainer.appendChild(rightPill);
+    board.appendChild(alertMessageContainer);
   }
 }
 

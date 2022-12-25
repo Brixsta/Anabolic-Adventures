@@ -72,7 +72,7 @@
   width: 100%;
   background-color: #ff19a3;
   opacity: 0.6;
-  transition: all 0.5s ease;
+  transition: all 500ms ease;
 }
 
 .sprite {
@@ -91,9 +91,18 @@
   top: 160px;
   position: absolute;
   border: solid 1px black;
-  background-image: url("./images/counter-top.png");
-  background-size: cover;
   overflow: hidden;
+}
+
+.counter-top::before {
+  background-image: url("./images/counter-top.png");
+  opacity: var(--fadeBackground, 1);
+  background-size: cover;
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  transition: all 300ms ease-in;
 }
 
 .phone {
@@ -126,6 +135,7 @@
   transform: rotate(10deg);
   background-color: transparent;
   background-repeat: no-repeat;
+  transition: all 300ms ease-in;
 }
 
 .dice-button {
@@ -149,6 +159,7 @@
   background-image: url("./images/dice-1.png");
   background-size: cover;
   animation-timing-function: ease-in;
+  transition: opacity 300ms ease-in;
 }
 
 .dice-two {
@@ -159,15 +170,50 @@
   background-image: url("./images/dice-4.png");
   background-size: cover;
   animation-timing-function: ease-in;
+  transition: opacity 300ms ease-in;
 }
 
-/* Low on Pre-Workout Tile Event */
+/* Phone Vibration */
 
 .vibrate-phone {
   animation-name: vibration;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-duration: 600ms;
+}
+
+.alert-message-container {
+  position: absolute;
+  background-color: white;
+  color: #ff19a3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 290px;
+  transform: translateX(50%);
+  right: 50%;
+  z-index: 1000;
+  padding: 15px 0px;
+  border-radius: 50px;
+  font-family: "Alexandria", sans-serif;
+  font-size: 16px;
+  border: solid 5px white;
+  box-shadow: 0px 0px 0px 5px #ff19a3;
+  background-color: #ff19a3;
+  color: white;
+  user-select: none;
+}
+
+.pill {
+  height: 20px;
+  width: 40px;
+  left: 0px;
+  margin-left: 10px;
+  margin-right: 10px;
+  animation-name: spin-pill;
+  animation-iteration-count: infinite;
+  animation-duration: 2000ms;
+  animation-timing-function: linear;
 }
 
 @keyframes vibration {
@@ -181,5 +227,15 @@
 
   100% {
     transform: rotate(-10deg);
+  }
+}
+
+@keyframes spin-pill {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }
