@@ -120,14 +120,14 @@ class Game {
   paintTiles() {
     const tiles = document.querySelectorAll(".tile");
 
-    // Jordan Peterson tile
+    // Drink Goggin's Sweat tile
     tiles[0].style.backgroundImage = "url('images/goggins.png')";
 
-    // Greg Doucette tile
+    // Athlean-X Magic Show tile
     tiles[3].style.backgroundImage = "url('images/athlean.png')";
 
-    // Drug Bust tile
-    tiles[4].style.backgroundImage = "url('images/drugbust.png')";
+    // Dirty Bulk Gone Wrong tile
+    tiles[4].style.backgroundImage = "url('images/doughboy.png')";
 
     // Arnold Hires Your Mom tile
     tiles[5].style.backgroundImage = "url('images/arnold.png')";
@@ -138,10 +138,10 @@ class Game {
     // Hulkster's blessing tile
     tiles[19].style.backgroundImage = "url('images/hulk.png')";
 
-    // Tommy Tren title
+    // Tommy Tren tile
     tiles[20].style.backgroundImage = "url('images/tren.png')";
 
-    // AthleanX title
+    // 8 Hour Arms tile
     tiles[21].style.backgroundImage = "url('images/greg.png')";
 
     // Mom's basement tile
@@ -212,9 +212,9 @@ class Game {
           tiles[3].children[0].innerHTML = "Athlean-X Magic Show";
         }
 
-        // apply text to Drug Bust tile
+        // apply text to Dirty Bulk Gone Wrong tile
         if (tiles[4].children[0]) {
-          tiles[4].children[0].innerHTML = "Drug Bust";
+          tiles[4].children[0].innerHTML = "Dirty Bulk Gone Wrong";
         }
 
         // apply text to Arnold Hires Your Mom tile
@@ -242,9 +242,9 @@ class Game {
           tiles[20].children[0].innerHTML = "Tommy Tren Collab";
         }
 
-        // apply text to Greg Doucette Speaks tile
+        // apply text to 8 Hour Arms tile
         if (tiles[21].children[0]) {
-          tiles[21].children[0].innerHTML = "Greg Doucette Speaks";
+          tiles[21].children[0].innerHTML = "8 Hour Arms";
         }
 
         // apply text to Low on Pre-Workout tile
@@ -513,11 +513,11 @@ class Game {
     journal.style.opacity = 0.2;
     const diceOne = document.querySelector(".dice-one");
     const diceTwo = document.querySelector(".dice-two");
-    diceOne.style.opacity = 0.2;
-    diceTwo.style.opacity = 0.2;
+    diceOne.style.opacity = 0;
+    diceTwo.style.opacity = 0;
 
     // create alert message
-    const message = "Check your Phone Bro";
+    const message = "Check Your Phone";
     this.createAlertMessage(message);
 
     // remove vibration effect when user clicks phone
@@ -531,6 +531,9 @@ class Game {
 
     // Pre-Workout tile event
     if (parseInt(activeTile.id) === 23) {
+      gameState.ambientTheme.pause();
+      const intervention = new Audio("./audio/intervention.wav");
+      intervention.play();
       this.vibratePhone();
     }
   }
@@ -553,7 +556,8 @@ class Game {
     diceTwo.style.opacity = 1;
     journal.style.opacity = 1;
     counterTop.style.setProperty("--fadeBackground", "1");
-    phone.removeEventListener("click", phone);
+    // phone.removeEventListener("click", this.handlePhoneClick);
+    this.createPhoneTextMessage();
   }
 
   createAlertMessage(message) {
@@ -567,12 +571,55 @@ class Game {
     const alertMessageContainer = document.createElement("div");
     alertMessageContainer.classList.add("alert-message-container");
     const board = document.querySelector(".board");
-    const messageText = document.createElement("span");
-    messageText.innerText = message;
+    const alertMessageTextContainer = document.createElement("span");
+    alertMessageTextContainer.innerText = message;
     alertMessageContainer.appendChild(leftPill);
-    alertMessageContainer.appendChild(messageText);
+    alertMessageContainer.appendChild(alertMessageTextContainer);
     alertMessageContainer.appendChild(rightPill);
     board.appendChild(alertMessageContainer);
+  }
+
+  createPhoneTextMessage() {
+    const board = document.querySelector(".board");
+    const phoneTextMessageContainer = document.createElement("div");
+    phoneTextMessageContainer.classList.add("phone-text-message-container");
+    board.append(phoneTextMessageContainer);
+
+    //create phone text message header
+    const phoneTextMessageHeader = document.createElement("div");
+    phoneTextMessageHeader.classList.add("phone-text-message-header");
+    phoneTextMessageContainer.appendChild(phoneTextMessageHeader);
+
+    //create phone text message metrics bar
+    const phoneTextMessageMetrics = document.createElement("div");
+    phoneTextMessageMetrics.classList.add("phone-text-message-metrics");
+    phoneTextMessageHeader.appendChild(phoneTextMessageMetrics);
+
+    //create phone text message time
+    const phoneTextMessageTime = document.createElement("div");
+    phoneTextMessageTime.classList.add("phone-text-message-time");
+    phoneTextMessageMetrics.appendChild(phoneTextMessageTime);
+    phoneTextMessageTime.innerText = "10:00";
+
+    //create wifi icon
+    const phoneTextMessageWifi = document.createElement("div");
+    phoneTextMessageWifi.classList.add("phone-text-message-wifi");
+    phoneTextMessageMetrics.appendChild(phoneTextMessageWifi);
+
+    // create lte icon
+    const phoneTextMessageLTE = document.createElement("div");
+    phoneTextMessageLTE.classList.add("phone-text-message-lte");
+    phoneTextMessageMetrics.appendChild(phoneTextMessageLTE);
+
+    // create signal strength icon
+    const phoneTextMessageSignal = document.createElement("div");
+    phoneTextMessageSignal.classList.add("phone-text-message-signal");
+    phoneTextMessageMetrics.appendChild(phoneTextMessageSignal);
+
+    // create recharging icon
+    const phoneTextMessageRecharge = document.createElement("div");
+    phoneTextMessageRecharge.classList.add("phone-text-message-recharge");
+    phoneTextMessageMetrics.appendChild(phoneTextMessageRecharge);
   }
 }
 

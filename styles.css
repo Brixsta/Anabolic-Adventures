@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Alexandria&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alexandria&family=Roboto&display=swap");
 
 * {
   margin: 0;
@@ -102,7 +102,7 @@
   position: absolute;
   height: 100%;
   width: 100%;
-  transition: all 300ms ease-in;
+  transition: all 200ms ease-in;
 }
 
 .phone {
@@ -135,7 +135,7 @@
   transform: rotate(10deg);
   background-color: transparent;
   background-repeat: no-repeat;
-  transition: all 300ms ease-in;
+  transition: opacity 200ms ease-in;
 }
 
 .dice-button {
@@ -159,7 +159,6 @@
   background-image: url("./images/dice-1.png");
   background-size: cover;
   animation-timing-function: ease-in;
-  transition: opacity 300ms ease-in;
 }
 
 .dice-two {
@@ -170,11 +169,102 @@
   background-image: url("./images/dice-4.png");
   background-size: cover;
   animation-timing-function: ease-in;
-  transition: opacity 300ms ease-in;
 }
 
-/* Phone Vibration */
+/* ///////////// Start of Phone Text Message ///////////// */
+.phone-text-message-container {
+  width: 480px;
+  height: 480px;
+  position: absolute;
+  left: 160px;
+  top: 160px;
+  background-color: white;
+  border: solid 1px black;
+  overflow: hidden;
+  font-family: "Roboto", sans-serif;
+}
 
+.phone-text-message-header {
+  position: absolute;
+  /* background-color: #fafcfb; */
+  width: 100%;
+  height: 80px;
+  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+  border-bottom: solid 1px #c1c1c1;
+}
+
+.phone-text-message-metrics {
+  position: absolute;
+  height: 30px;
+  width: 100%;
+  display: flex;
+  border-bottom: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.phone-text-message-time {
+  height: 100%;
+  width: 50px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: #7a8080;
+  user-select: none;
+  position: absolute;
+  left: 0px;
+}
+
+.phone-text-message-wifi {
+  height: 80%;
+  width: 20px;
+  background-image: url("./images/wifi.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.phone-text-message-lte {
+  height: 90%;
+  width: 20px;
+  background-image: url("./images/lte.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.phone-text-message-signal {
+  height: 70%;
+  width: 15px;
+  background-image: url("./images/signal.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.phone-text-message-recharge {
+  height: 70%;
+  width: 15px;
+  background-image: url("./images/recharge.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+/* ///////////// End of Phone Text Message ///////////// */
+
+/* ///////////// Start of Phone Vibration ///////////// */
 .vibrate-phone {
   animation-name: vibration;
   animation-timing-function: linear;
@@ -196,13 +286,15 @@
   padding: 15px 0px;
   border-radius: 50px;
   font-family: "Alexandria", sans-serif;
-  font-size: 16px;
+  /* font-size: 16px; */
+  font-size: 20px;
   border: solid 5px white;
   box-shadow: 0px 0px 0px 5px #ff19a3;
   background-color: #ff19a3;
   color: white;
   user-select: none;
 }
+/* ///////////// End of Phone Vibration ///////////// */
 
 .pill {
   height: 20px;
@@ -216,6 +308,7 @@
   animation-timing-function: linear;
 }
 
+/* ///////////// Start of Animations ///////////// */
 @keyframes vibration {
   0% {
     transform: rotate(-10deg);
@@ -239,3 +332,4 @@
     transform: rotate(360deg);
   }
 }
+/* ///////////// End of Animations ///////////// */
