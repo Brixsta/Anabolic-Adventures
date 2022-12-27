@@ -126,7 +126,7 @@ class Game {
     // Athlean-X Magic Show tile
     tiles[3].style.backgroundImage = "url('images/athlean.png')";
 
-    // Dirty Bulk Gone Wrong tile
+    // Dirty Bulk Goes Wrong tile
     tiles[4].style.backgroundImage = "url('images/doughboy.png')";
 
     // Arnold Hires Your Mom tile
@@ -212,9 +212,9 @@ class Game {
           tiles[3].children[0].innerHTML = "Athlean-X Magic Show";
         }
 
-        // apply text to Dirty Bulk Gone Wrong tile
+        // apply text to Dirty Bulk Goes Wrong tile
         if (tiles[4].children[0]) {
-          tiles[4].children[0].innerHTML = "Dirty Bulk Gone Wrong";
+          tiles[4].children[0].innerHTML = "Dirty Bulk Goes Wrong";
         }
 
         // apply text to Arnold Hires Your Mom tile
@@ -313,11 +313,11 @@ class Game {
     const firstRandomNumber = Math.floor(Math.random() * 6) + 1;
     const SecondRandomNumber = Math.floor(Math.random() * 6) + 1;
 
-    // gameState.movesLeft = firstRandomNumber + SecondRandomNumber;
-    // gameState.initialRoll = firstRandomNumber + SecondRandomNumber;
+    gameState.movesLeft = firstRandomNumber + SecondRandomNumber;
+    gameState.initialRoll = firstRandomNumber + SecondRandomNumber;
 
-    gameState.movesLeft = 1;
-    gameState.initialRoll = 1;
+    // gameState.movesLeft = 1;
+    // gameState.initialRoll = 1;
 
     this.playRandomVoiceLine();
 
@@ -491,7 +491,7 @@ class Game {
     }
   }
 
-  vibratePhone() {
+  vibratePhone(person) {
     const phone = document.querySelector(".phone");
     const vibrationSound = new Audio("./audio/vibrating.wav");
     phone.classList.add("vibrate-phone");
@@ -522,7 +522,7 @@ class Game {
 
     // remove vibration effect when user clicks phone
     phone.addEventListener("click", () => {
-      this.handlePhoneClick(addVibrateInterval, removeVibrateInterval);
+      this.handlePhoneClick(addVibrateInterval, removeVibrateInterval, person);
     });
   }
 
@@ -534,11 +534,11 @@ class Game {
       gameState.ambientTheme.pause();
       const intervention = new Audio("./audio/intervention.wav");
       intervention.play();
-      this.vibratePhone();
+      this.vibratePhone("Pastor Tom");
     }
   }
 
-  handlePhoneClick(interval1, interval2) {
+  handlePhoneClick(interval1, interval2, person) {
     const phone = document.querySelector(".phone");
     const diceOne = document.querySelector(".dice-one");
     const diceTwo = document.querySelector(".dice-two");
@@ -557,7 +557,7 @@ class Game {
     journal.style.opacity = 1;
     counterTop.style.setProperty("--fadeBackground", "1");
     // phone.removeEventListener("click", this.handlePhoneClick);
-    this.createPhoneTextMessage();
+    this.createPhoneTextMessage(person);
   }
 
   createAlertMessage(message) {
@@ -579,7 +579,7 @@ class Game {
     board.appendChild(alertMessageContainer);
   }
 
-  createPhoneTextMessage() {
+  createPhoneTextMessage(person) {
     const board = document.querySelector(".board");
     const phoneTextMessageContainer = document.createElement("div");
     phoneTextMessageContainer.classList.add("phone-text-message-container");
@@ -595,7 +595,7 @@ class Game {
     phoneTextMessageMetrics.classList.add("phone-text-message-metrics");
     phoneTextMessageHeader.appendChild(phoneTextMessageMetrics);
 
-    //create phone text message time
+    // create phone text message time
     const phoneTextMessageTime = document.createElement("div");
     phoneTextMessageTime.classList.add("phone-text-message-time");
     phoneTextMessageMetrics.appendChild(phoneTextMessageTime);
@@ -620,6 +620,43 @@ class Game {
     const phoneTextMessageRecharge = document.createElement("div");
     phoneTextMessageRecharge.classList.add("phone-text-message-recharge");
     phoneTextMessageMetrics.appendChild(phoneTextMessageRecharge);
+
+    // create contact name container
+    const contactNameContainer = document.createElement("div");
+    contactNameContainer.classList.add("contact-name-container");
+    phoneTextMessageContainer.appendChild(contactNameContainer);
+
+    // create arrow icon
+    const contactNameArrow = document.createElement("div");
+    contactNameArrow.classList.add("contact-name-arrow");
+    contactNameContainer.appendChild(contactNameArrow);
+
+    // create contact name text
+    const contactNameText = document.createElement("span");
+    contactNameText.classList.add("contact-name-text");
+    contactNameContainer.appendChild(contactNameText);
+    contactNameText.innerText = person;
+
+    // create contact name video icon
+    const contactNameVideo = document.createElement("div");
+    contactNameVideo.classList.add("contact-name-video");
+    contactNameContainer.appendChild(contactNameVideo);
+
+    // create contact name phone icon
+    const contactNamePhone = document.createElement("div");
+    contactNamePhone.classList.add("contact-name-phone");
+    contactNameContainer.appendChild(contactNamePhone);
+
+    // create contact name dots icon
+    const contactNameDots = document.createElement("div");
+    contactNameDots.classList.add("contact-name-dots");
+    contactNameContainer.appendChild(contactNameDots);
+
+    // create texting watermark
+    const textingWatermark = document.createElement("div");
+    textingWatermark.classList.add("texting-watermark");
+    phoneTextMessageContainer.appendChild(textingWatermark);
+    textingWatermark.innerText = `Texting with ${person}`;
   }
 }
 
