@@ -169,7 +169,7 @@ class Game {
       const tileTitle = document.createElement("div");
       tileTitle.classList.add("tile-title");
 
-      // only append titles where necessary
+      // only append titles on outter-most tiles
       if (
         i !== 6 &&
         i !== 7 &&
@@ -276,14 +276,17 @@ class Game {
     const board = document.querySelector(".board");
     board.appendChild(counterTop);
 
+    // create counter top phone
     const phone = document.createElement("button");
     phone.classList.add("phone");
     board.appendChild(phone);
 
+    // create counter top journal
     const journal = document.createElement("div");
     journal.classList.add("journal");
     counterTop.appendChild(journal);
 
+    // create counter top dice w/ button container
     const diceButton = document.createElement("button");
     diceButton.classList.add("dice-button");
     counterTop.appendChild(diceButton);
@@ -313,11 +316,11 @@ class Game {
     const firstRandomNumber = Math.floor(Math.random() * 6) + 1;
     const SecondRandomNumber = Math.floor(Math.random() * 6) + 1;
 
-    gameState.movesLeft = firstRandomNumber + SecondRandomNumber;
-    gameState.initialRoll = firstRandomNumber + SecondRandomNumber;
+    // gameState.movesLeft = firstRandomNumber + SecondRandomNumber;
+    // gameState.initialRoll = firstRandomNumber + SecondRandomNumber;
 
-    // gameState.movesLeft = 1;
-    // gameState.initialRoll = 1;
+    gameState.movesLeft = 1;
+    gameState.initialRoll = 1;
 
     this.playRandomVoiceLine();
 
@@ -467,6 +470,8 @@ class Game {
       new Audio("./audio/thatguy.wav"),
       new Audio("./audio/dead.wav"),
       new Audio("./audio/surprised.wav"),
+      new Audio("./audio/chance.wav"),
+      new Audio("./audio/shorts.wav"),
     ];
     const longVoiceLines = [
       new Audio("./audio/gore.wav"),
@@ -491,7 +496,7 @@ class Game {
     }
   }
 
-  vibratePhone(person) {
+  vibratePhone(person, textMessage) {
     const phone = document.querySelector(".phone");
     const vibrationSound = new Audio("./audio/vibrating.wav");
     phone.classList.add("vibrate-phone");
@@ -522,7 +527,12 @@ class Game {
 
     // remove vibration effect when user clicks phone
     phone.addEventListener("click", () => {
-      this.handlePhoneClick(addVibrateInterval, removeVibrateInterval, person);
+      this.handlePhoneClick(
+        addVibrateInterval,
+        removeVibrateInterval,
+        person,
+        textMessage
+      );
     });
   }
 
@@ -531,14 +541,15 @@ class Game {
 
     // Pre-Workout tile event
     if (parseInt(activeTile.id) === 23) {
+      const preacherText = `I'm worried about you. I talked with God and he said you were sufferring from NO-XPLODE dependency. I know it feels like all hope is lost. Call me immediately before the pre-workout demons ravage your sinful soul. Jesus loves you!`;
       gameState.ambientTheme.pause();
       const intervention = new Audio("./audio/intervention.wav");
       intervention.play();
-      this.vibratePhone("Pastor Tom");
+      this.vibratePhone("Creepy Pastor Tom", preacherText);
     }
   }
 
-  handlePhoneClick(interval1, interval2, person) {
+  handlePhoneClick(interval1, interval2, person, textMessage) {
     const phone = document.querySelector(".phone");
     const diceOne = document.querySelector(".dice-one");
     const diceTwo = document.querySelector(".dice-two");
@@ -557,7 +568,7 @@ class Game {
     journal.style.opacity = 1;
     counterTop.style.setProperty("--fadeBackground", "1");
     // phone.removeEventListener("click", this.handlePhoneClick);
-    this.createPhoneTextMessage(person);
+    this.createPhoneTextMessage(person, textMessage);
   }
 
   createAlertMessage(message) {
@@ -579,7 +590,7 @@ class Game {
     board.appendChild(alertMessageContainer);
   }
 
-  createPhoneTextMessage(person) {
+  createPhoneTextMessage(person, textMessage) {
     const board = document.querySelector(".board");
     const phoneTextMessageContainer = document.createElement("div");
     phoneTextMessageContainer.classList.add("phone-text-message-container");
@@ -657,6 +668,32 @@ class Game {
     textingWatermark.classList.add("texting-watermark");
     phoneTextMessageContainer.appendChild(textingWatermark);
     textingWatermark.innerText = `Texting with ${person}`;
+
+    // create text message content container
+    const textMessageContentContainer = document.createElement("div");
+    textMessageContentContainer.classList.add("text-message-content-container");
+    phoneTextMessageContainer.appendChild(textMessageContentContainer);
+
+    // create avatar column
+    const avatarColumn = document.createElement("div");
+    avatarColumn.classList.add("avatar-column");
+    textMessageContentContainer.appendChild(avatarColumn);
+
+    // create text message content column
+    const textMessageContentColumn = document.createElement("div");
+    textMessageContentColumn.classList.add("text-message-content-column");
+    textMessageContentContainer.appendChild(textMessageContentColumn);
+
+    // create text message avatar
+    const textMessageAvatar = document.createElement("div");
+    textMessageAvatar.classList.add("text-message-avatar");
+    avatarColumn.appendChild(textMessageAvatar);
+
+    // create message
+    const message = document.createElement("div");
+    message.classList.add("message");
+    textMessageContentColumn.appendChild(message);
+    message.innerText = textMessage;
   }
 }
 
