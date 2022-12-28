@@ -171,6 +171,18 @@
   animation-timing-function: ease-in;
 }
 
+.health-bar {
+  width: 50px;
+  background-color: red;
+  position: absolute;
+  left: -140px;
+}
+.gains-bar {
+  width: 50px;
+  background-color: blue;
+  position: absolute;
+  left: -70px;
+}
 /* ///////////// Start of Phone Text Message ///////////// */
 .phone-text-message-container {
   width: 480px;
@@ -338,6 +350,7 @@
   align-items: center;
   font-size: 14px;
   user-select: none;
+  font-family: "Roboto", sans-serif;
 }
 
 .text-message-content-container {
@@ -345,6 +358,12 @@
   top: 180px;
   display: flex;
   align-items: center;
+  animation-name: text-message-enlarge;
+  animation-timing-function: ease-in;
+  animation-duration: 500ms;
+  animation-delay: 400ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 .avatar-column {
@@ -363,7 +382,7 @@
   align-items: center;
   padding-left: 10px;
   padding-right: 10px;
-  padding-top: 20px;
+  padding-top: 0px;
   padding-bottom: 20px;
 }
 
@@ -385,6 +404,28 @@
   align-items: center;
   padding: 15px;
   line-height: 25px;
+  user-select: none;
+  font-family: "Roboto", sans-serif;
+}
+
+.ok-button {
+  position: absolute;
+  bottom: 20px;
+  background-color: #ff19a3;
+  color: white;
+  border: none;
+  transform: translateX(50%);
+  right: 50%;
+  padding: 15px 30px;
+  border-radius: 30px;
+  transition: 0.3s ease-in-out all;
+  font-size: 18px;
+  font-family: "Roboto", sans-serif;
+}
+
+.ok-button:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 /* ///////////// End of Phone Text Message ///////////// */
@@ -411,7 +452,6 @@
   padding: 15px 0px;
   border-radius: 50px;
   font-family: "Alexandria", sans-serif;
-  /* font-size: 16px; */
   font-size: 20px;
   border: solid 5px white;
   box-shadow: 0px 0px 0px 5px #ff19a3;
@@ -434,6 +474,18 @@
 }
 
 /* ///////////// Start of Animations ///////////// */
+
+@keyframes text-message-enlarge {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 @keyframes vibration {
   0% {
     transform: rotate(-10deg);

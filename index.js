@@ -3,6 +3,8 @@ const gameState = {
   movesLeft: null,
   ambientTheme: new Audio("./audio/theme.wav"),
   gameStarted: false,
+  health: 100,
+  gains: 100,
 };
 
 // collision detection function
@@ -53,6 +55,8 @@ class Game {
     this.paintTiles();
     this.createSprite();
     this.createCounterTop();
+    this.createHealthBar();
+    this.createGainsBar();
   }
 
   createBoard() {
@@ -673,6 +677,8 @@ class Game {
     const textMessageContentContainer = document.createElement("div");
     textMessageContentContainer.classList.add("text-message-content-container");
     phoneTextMessageContainer.appendChild(textMessageContentContainer);
+    textMessageContentContainer.style.transform = "scale(0,0)";
+    textMessageContentContainer.style.opacity = 0;
 
     // create avatar column
     const avatarColumn = document.createElement("div");
@@ -694,6 +700,57 @@ class Game {
     message.classList.add("message");
     textMessageContentColumn.appendChild(message);
     message.innerText = textMessage;
+
+    // create text message sound
+    const pop = new Audio("./audio/pop.wav");
+
+    setTimeout(() => {
+      pop.play();
+    }, 800);
+
+    const okButton = document.createElement("button");
+    okButton.classList.add("ok-button");
+    phoneTextMessageContainer.appendChild(okButton);
+    okButton.innerText = "How'd you get my number?";
+    okButton.style.opacity = 0;
+    okButton.disabled = true;
+
+    // handle okButton Click
+    okButton.addEventListener("click", () => {
+      const phoneTextMessageContainer = document.querySelector(
+        ".phone-text-message-container"
+      );
+      phoneTextMessageContainer.remove();
+      gameState.ambientTheme.play();
+    });
+
+    // disable okButton until it is visible
+    setTimeout(() => {
+      okButton.style.opacity = 1;
+      okButton.disabled = false;
+    }, 4000);
+  }
+
+  createHealthBar() {
+    const healthBar = document.createElement("div");
+    healthBar.classList.add("health-bar");
+    const board = document.querySelector(".board");
+    board.appendChild(healthBar);
+
+    // move health level depending on game state
+    const currentHealthLevel = gameState.health;
+    healthBar.style.height = currentHealthLevel + "%";
+  }
+
+  createGainsBar() {
+    const gainsBar = document.createElement("div");
+    gainsBar.classList.add("gains-bar");
+    const board = document.querySelector(".board");
+    board.appendChild(gainsBar);
+
+    // move gains level depending on game state
+    const currentGainsLevel = gameState.gains;
+    gainsBar.style.height = currentGainsLevel + "%";
   }
 }
 
