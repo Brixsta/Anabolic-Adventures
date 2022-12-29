@@ -2,11 +2,13 @@ const gameState = {
   initialRoll: null,
   movesLeft: null,
   ambientTheme: new Audio("./audio/theme.wav"),
+  interventionTheme: new Audio("./audio/intervention.wav"),
   gameStarted: false,
+  person: null,
+  textMessage: null,
   health: 100,
   gains: 100,
 };
-//testing
 
 // collision detection function
 const isCollide = (x, y) => {
@@ -501,22 +503,7 @@ class Game {
     }
   }
 
-  vibratePhone(person, textMessage) {
-    const phone = document.querySelector(".phone");
-    const vibrationSound = new Audio("./audio/vibrating.wav");
-    phone.classList.add("vibrate-phone");
-    vibrationSound.play();
-
-    const removeVibrateInterval = setInterval(() => {
-      phone.classList.remove("vibrate-phone");
-    }, 1200);
-
-    const addVibrateInterval = setInterval(() => {
-      phone.classList.add("vibrate-phone");
-      vibrationSound.play();
-    }, 2400);
-
-    // fade background except for phone
+  allTransparentButPhone() {
     const counterTop = document.querySelector(".counter-top");
     counterTop.style.setProperty("--fadeBackground", ".2");
     const journal = document.querySelector(".journal");
@@ -525,55 +512,51 @@ class Game {
     const diceTwo = document.querySelector(".dice-two");
     diceOne.style.opacity = 0;
     diceTwo.style.opacity = 0;
+  }
 
-    // create alert message
-    const message = "Check Your Phone";
-    this.createAlertMessage(message);
-
-    // remove vibration effect when user clicks phone
-    phone.addEventListener("click", () => {
-      this.handlePhoneClick(
-        addVibrateInterval,
-        removeVibrateInterval,
-        person,
-        textMessage
-      );
-    });
+  vibratePhone() {
+    console.log("vibrating phone");
   }
 
   playerLandsOnTile() {
+    const phone = document.querySelector(".phone");
     const activeTile = document.querySelector(".active-tile");
 
     // Pre-Workout tile event
     if (parseInt(activeTile.id) === 23) {
-      const preacherText = `I'm worried about you. I talked with God and he said you were sufferring from NO-XPLODE dependency. I know it feels like all hope is lost. Call me immediately before the pre-workout demons ravage your sinful soul. Jesus loves you!`;
+      const textMessage = `I'm worried about you. I talked with God and he said you were sufferring from NO-XPLODE dependency. I know it feels like all hope is lost. Call me immediately before the pre-workout demons ravage your sinful soul. Jesus loves you!`;
+      gameState.textMessage = textMessage;
+      gameState.person = "Creepy Preacher Tom";
       gameState.ambientTheme.pause();
-      const intervention = new Audio("./audio/intervention.wav");
-      intervention.play();
-      this.vibratePhone("Creepy Pastor Tom", preacherText);
+      gameState.interventionTheme.play();
+      this.vibratePhone();
+      this.allTransparentButPhone();
+      this.createAlertMessage("Check Your Phone");
+
+      phone.addEventListener("click", this.handlePhoneClick);
     }
   }
 
-  handlePhoneClick(interval1, interval2, person, textMessage) {
+  handlePhoneClick() {
     const phone = document.querySelector(".phone");
+    const alertMessageContainer = document.querySelector(
+      ".alert-message-container"
+    );
+    alertMessageContainer.remove();
+    game.restoreTransparentCounterTopItems();
+    game.createPhoneTextMessage(gameState.person, gameState.textMessage);
+    phone.removeEventListener("click", game.handlePhoneClick);
+  }
+
+  restoreTransparentCounterTopItems() {
     const diceOne = document.querySelector(".dice-one");
     const diceTwo = document.querySelector(".dice-two");
     const journal = document.querySelector(".journal");
     const counterTop = document.querySelector(".counter-top");
-    const alertMessageContainer = document.querySelector(
-      ".alert-message-container"
-    );
-    clearInterval(interval1);
-    clearInterval(interval2);
-    phone.classList.remove("vibrate-phone");
-
-    alertMessageContainer.remove();
     diceOne.style.opacity = 1;
     diceTwo.style.opacity = 1;
     journal.style.opacity = 1;
     counterTop.style.setProperty("--fadeBackground", "1");
-    // phone.removeEventListener("click", this.handlePhoneClick);
-    this.createPhoneTextMessage(person, textMessage);
   }
 
   createAlertMessage(message) {
@@ -709,27 +692,34 @@ class Game {
       pop.play();
     }, 800);
 
-    const okButton = document.createElement("button");
-    okButton.classList.add("ok-button");
-    phoneTextMessageContainer.appendChild(okButton);
-    okButton.innerText = "How'd you get my number?";
-    okButton.style.opacity = 0;
-    okButton.disabled = true;
+    const textReplyButton = document.createElement("button");
+    textReplyButton.classList.add("text-reply-button");
+    phoneTextMessageContainer.appendChild(textReplyButton);
+    textReplyButton.innerText = "How'd you get my number?";
+    textReplyButton.style.opacity = 0;
+    textReplyButton.disabled = true;
 
-    // handle okButton Click
-    okButton.addEventListener("click", () => {
-      const phoneTextMessageContainer = document.querySelector(
-        ".phone-text-message-container"
-      );
-      phoneTextMessageContainer.remove();
-      gameState.ambientTheme.play();
-    });
+    // handle textReplyButton Click
+    textReplyButton.addEventListener("click", this.handleTextReplyButtonClick);
 
-    // disable okButton until it is visible
+    // disable text reply button until it is visible
     setTimeout(() => {
-      okButton.style.opacity = 1;
-      okButton.disabled = false;
+      textReplyButton.style.opacity = 1;
+      textReplyButton.disabled = false;
     }, 4000);
+  }
+
+  handleTextReplyButtonClick() {
+    const textReplyButton = document.querySelector(".text-reply-button");
+    const phoneTextMessageContainer = document.querySelector(
+      ".phone-text-message-container"
+    );
+    phoneTextMessageContainer.remove();
+    gameState.ambientTheme.play();
+    textReplyButton.removeEventListener(
+      "click",
+      game.handleTextReplyButtonClick
+    );
   }
 
   createHealthBar() {

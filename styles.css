@@ -408,7 +408,7 @@
   font-family: "Roboto", sans-serif;
 }
 
-.ok-button {
+.text-reply-button {
   position: absolute;
   bottom: 20px;
   background-color: #ff19a3;
@@ -423,7 +423,7 @@
   font-family: "Roboto", sans-serif;
 }
 
-.ok-button:hover {
+.text-reply-button:hover {
   cursor: pointer;
   text-decoration: underline;
 }
