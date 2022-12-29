@@ -6,6 +6,7 @@ const gameState = {
   health: 100,
   gains: 100,
 };
+//testing
 
 // collision detection function
 const isCollide = (x, y) => {
