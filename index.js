@@ -381,9 +381,7 @@ class Game {
   moveSprite() {
     // re enable dice
     if (gameState.movesLeft === 0) {
-      this.playerLandsOnTile();
-      const diceButton = document.querySelector(".dice-button");
-      diceButton.disabled = false;
+      this.handleTileEvent();
       return;
     }
 
@@ -518,7 +516,9 @@ class Game {
     console.log("vibrating phone");
   }
 
-  playerLandsOnTile() {
+  handleTileEvent() {
+    const diceButton = document.querySelector(".dice-button");
+    diceButton.disabled = false;
     const phone = document.querySelector(".phone");
     const activeTile = document.querySelector(".active-tile");
 
@@ -560,6 +560,8 @@ class Game {
   }
 
   createAlertMessage(message) {
+    const diceButton = document.querySelector(".dice-button");
+    diceButton.disabled = true;
     const leftPill = document.createElement("img");
     const rightPill = document.createElement("img");
     leftPill.classList.add("pill");
@@ -710,6 +712,8 @@ class Game {
   }
 
   handleTextReplyButtonClick() {
+    const diceButton = document.querySelector(".dice-button");
+    diceButton.disabled = false;
     const textReplyButton = document.querySelector(".text-reply-button");
     const phoneTextMessageContainer = document.querySelector(
       ".phone-text-message-container"
