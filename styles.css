@@ -176,12 +176,16 @@
   background-color: red;
   position: absolute;
   left: -140px;
+  bottom: 0;
+  transition: all ease-in 300ms;
 }
 .gains-bar {
   width: 50px;
   background-color: blue;
   position: absolute;
   left: -70px;
+  bottom: 0;
+  transition: all ease-in 300ms;
 }
 /* ///////////// Start of Phone Text Message ///////////// */
 .phone-text-message-container {
