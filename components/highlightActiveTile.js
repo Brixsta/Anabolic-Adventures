@@ -1,4 +1,4 @@
-import gameState from "./index.js";
+import gameState from "./gameState.js";
 
 // collision detection function
 const isCollide = (x, y) => {
