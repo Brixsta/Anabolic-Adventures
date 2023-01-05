@@ -1,19 +1,14 @@
-import createAlertMessage from "./createAlertMessage.js";
-import createTiles from "./createTiles.js";
-import paintTiles from "./paintTiles.js";
-import highlightActiveTile from "./highlightActiveTile.js";
+import gameState from "./gameState.js";
 import createBoard from "./createBoard.js";
-
-const gameState = {
-  gameStarted: false,
-  initialRoll: null,
-  movesLeft: null,
-  person: null,
-  textMessage: null,
-  ambientTheme: new Audio("./audio/theme.wav"),
-  health: 100,
-  gains: 100,
-};
+import createTiles from "./createTiles.js";
+import createTileTitles from "./createTileTitles.js";
+import paintTiles from "./paintTiles.js";
+import createSprite from "./createSprite.js";
+import createHealthBar from "./createHealthBar.js";
+import createGainsBar from "./createGainsBar.js";
+import highlightActiveTile from "./highlightActiveTile.js";
+import createAlertMessage from "./createAlertMessage.js";
+import createPhoneTextMessage from "./createPhoneTextMessage.js";
 
 window.requestAnimationFrame(highlightActiveTile);
 
@@ -21,119 +16,12 @@ class Game {
   constructor() {
     createBoard();
     createTiles();
-    this.createTileTitles();
+    createTileTitles();
     paintTiles();
-    this.createSprite();
+    createSprite();
     this.createCounterTop();
-    this.createHealthBar();
-    this.createGainsBar();
-  }
-
-  createTileTitles() {
-    for (let i = 0; i < 25; i++) {
-      const tiles = document.querySelectorAll(".tile");
-      const tileTitle = document.createElement("div");
-      tileTitle.classList.add("tile-title");
-
-      // only append titles on outter-most tiles
-      if (
-        i !== 6 &&
-        i !== 7 &&
-        i !== 8 &&
-        i !== 11 &&
-        i !== 12 &&
-        i !== 13 &&
-        i !== 16 &&
-        i !== 17 &&
-        i !== 18
-      ) {
-        tiles[i].appendChild(tileTitle);
-
-        // apply text to Synthohl Scenarios
-        if (tiles[2].children[0]) {
-          tiles[2].children[0].innerHTML = "Steroid Scenarios";
-        }
-        if (tiles[10].children[0]) {
-          tiles[10].children[0].innerHTML = "Steroid Scenarios";
-        }
-        if (tiles[14].children[0]) {
-          tiles[14].children[0].innerHTML = "Steroid Scenarios";
-        }
-        if (tiles[22].children[0]) {
-          tiles[22].children[0].innerHTML = "Steroid Scenarios";
-        }
-
-        // apply text Drink Goggin's Sweat tile
-        if (tiles[0].children[0]) {
-          tiles[0].children[0].innerHTML = "Drink Goggin's Sweat";
-        }
-
-        // apply text to Fake Natty tile
-        if (tiles[1].children[0]) {
-          tiles[1].children[0].innerHTML = "Labeled Fake Natty";
-        }
-
-        // apply text to Athlean-X Magic Show tile
-        if (tiles[3].children[0]) {
-          tiles[3].children[0].innerHTML = "Athlean-X Magic Show";
-        }
-
-        // apply text to Dirty Bulk Goes Wrong tile
-        if (tiles[4].children[0]) {
-          tiles[4].children[0].innerHTML = "Dirty Bulk Goes Wrong";
-        }
-
-        // apply text to Arnold Hires Your Mom tile
-        if (tiles[5].children[0]) {
-          tiles[5].children[0].innerHTML = "Arnold Hires Your Mom";
-        }
-
-        // apply text to Train w/ Larry Wheels tile
-        if (tiles[9].children[0]) {
-          tiles[9].children[0].innerHTML = "Train w/ Larry Wheels";
-        }
-
-        // apply text to DMT w/ Joe Rogan tile
-        if (tiles[15].children[0]) {
-          tiles[15].children[0].innerHTML = "DMT w/ Joe Rogan";
-        }
-
-        // apply text to Hulkster's Proposal tile
-        if (tiles[19].children[0]) {
-          tiles[19].children[0].innerHTML = "Hulkster's Proposal";
-        }
-
-        // apply text Tommy Tren Collab tile
-        if (tiles[20].children[0]) {
-          tiles[20].children[0].innerHTML = "Tommy Tren Collab";
-        }
-
-        // apply text to 8 Hour Arms tile
-        if (tiles[21].children[0]) {
-          tiles[21].children[0].innerHTML = "8 Hour Arms";
-        }
-
-        // apply text to Low on Pre-Workout tile
-        if (tiles[23].children[0]) {
-          tiles[23].children[0].innerHTML = "Low on Pre-Workout";
-        }
-
-        // apply text to Mom's Basement tile
-        if (tiles[24].children[0]) {
-          tiles[24].children[0].innerHTML = "Mom's Basement";
-        }
-      }
-    }
-  }
-
-  createSprite() {
-    const sprite = document.createElement("div");
-    sprite.classList.add("sprite");
-    const board = document.querySelector(".board");
-    board.appendChild(sprite);
-
-    sprite.style.bottom = "70px";
-    sprite.style.right = "55px";
+    createHealthBar();
+    createGainsBar();
   }
 
   createCounterTop() {
@@ -405,7 +293,7 @@ class Game {
     );
     alertMessageContainer.remove();
     game.restoreTransparentCounterTopItems();
-    game.createPhoneTextMessage(gameState.person, gameState.textMessage);
+    createPhoneTextMessage(gameState.person, gameState.textMessage);
     phone.removeEventListener("click", game.handlePhoneClick);
   }
 
@@ -418,183 +306,6 @@ class Game {
     diceTwo.style.opacity = 1;
     journal.style.opacity = 1;
     counterTop.style.setProperty("--fadeBackground", "1");
-  }
-
-  createPhoneTextMessage(person, textMessage) {
-    const board = document.querySelector(".board");
-    const phoneTextMessageContainer = document.createElement("div");
-    phoneTextMessageContainer.classList.add("phone-text-message-container");
-    board.append(phoneTextMessageContainer);
-
-    //create phone text message header
-    const phoneTextMessageHeader = document.createElement("div");
-    phoneTextMessageHeader.classList.add("phone-text-message-header");
-    phoneTextMessageContainer.appendChild(phoneTextMessageHeader);
-
-    //create phone text message metrics bar
-    const phoneTextMessageMetrics = document.createElement("div");
-    phoneTextMessageMetrics.classList.add("phone-text-message-metrics");
-    phoneTextMessageHeader.appendChild(phoneTextMessageMetrics);
-
-    // create phone text message time
-    const phoneTextMessageTime = document.createElement("div");
-    phoneTextMessageTime.classList.add("phone-text-message-time");
-    phoneTextMessageMetrics.appendChild(phoneTextMessageTime);
-    phoneTextMessageTime.innerText = "10:00";
-
-    //create wifi icon
-    const phoneTextMessageWifi = document.createElement("div");
-    phoneTextMessageWifi.classList.add("phone-text-message-wifi");
-    phoneTextMessageMetrics.appendChild(phoneTextMessageWifi);
-
-    // create lte icon
-    const phoneTextMessageLTE = document.createElement("div");
-    phoneTextMessageLTE.classList.add("phone-text-message-lte");
-    phoneTextMessageMetrics.appendChild(phoneTextMessageLTE);
-
-    // create signal strength icon
-    const phoneTextMessageSignal = document.createElement("div");
-    phoneTextMessageSignal.classList.add("phone-text-message-signal");
-    phoneTextMessageMetrics.appendChild(phoneTextMessageSignal);
-
-    // create recharging icon
-    const phoneTextMessageRecharge = document.createElement("div");
-    phoneTextMessageRecharge.classList.add("phone-text-message-recharge");
-    phoneTextMessageMetrics.appendChild(phoneTextMessageRecharge);
-
-    // create contact name container
-    const contactNameContainer = document.createElement("div");
-    contactNameContainer.classList.add("contact-name-container");
-    phoneTextMessageContainer.appendChild(contactNameContainer);
-
-    // create arrow icon
-    const contactNameArrow = document.createElement("div");
-    contactNameArrow.classList.add("contact-name-arrow");
-    contactNameContainer.appendChild(contactNameArrow);
-
-    // create contact name text
-    const contactNameText = document.createElement("span");
-    contactNameText.classList.add("contact-name-text");
-    contactNameContainer.appendChild(contactNameText);
-    contactNameText.innerText = person;
-
-    // create contact name video icon
-    const contactNameVideo = document.createElement("div");
-    contactNameVideo.classList.add("contact-name-video");
-    contactNameContainer.appendChild(contactNameVideo);
-
-    // create contact name phone icon
-    const contactNamePhone = document.createElement("div");
-    contactNamePhone.classList.add("contact-name-phone");
-    contactNameContainer.appendChild(contactNamePhone);
-
-    // create contact name dots icon
-    const contactNameDots = document.createElement("div");
-    contactNameDots.classList.add("contact-name-dots");
-    contactNameContainer.appendChild(contactNameDots);
-
-    // create texting watermark
-    const textingWatermark = document.createElement("div");
-    textingWatermark.classList.add("texting-watermark");
-    phoneTextMessageContainer.appendChild(textingWatermark);
-    textingWatermark.innerText = `Texting with ${person}`;
-
-    // create text message content container
-    const textMessageContentContainer = document.createElement("div");
-    textMessageContentContainer.classList.add("text-message-content-container");
-    phoneTextMessageContainer.appendChild(textMessageContentContainer);
-    textMessageContentContainer.style.transform = "scale(0,0)";
-    textMessageContentContainer.style.opacity = 0;
-
-    // create avatar column
-    const avatarColumn = document.createElement("div");
-    avatarColumn.classList.add("avatar-column");
-    textMessageContentContainer.appendChild(avatarColumn);
-
-    // create text message content column
-    const textMessageContentColumn = document.createElement("div");
-    textMessageContentColumn.classList.add("text-message-content-column");
-    textMessageContentContainer.appendChild(textMessageContentColumn);
-
-    // create text message avatar
-    const textMessageAvatar = document.createElement("div");
-    textMessageAvatar.classList.add("text-message-avatar");
-    avatarColumn.appendChild(textMessageAvatar);
-
-    // create message
-    const message = document.createElement("div");
-    message.classList.add("message");
-    textMessageContentColumn.appendChild(message);
-    message.innerText = textMessage;
-
-    // create text message sound
-    const pop = new Audio("./audio/pop.wav");
-
-    setTimeout(() => {
-      pop.play();
-    }, 800);
-
-    const textReplyButton = document.createElement("button");
-    textReplyButton.classList.add("text-reply-button");
-    phoneTextMessageContainer.appendChild(textReplyButton);
-    textReplyButton.innerText = "How'd you get my number?";
-    textReplyButton.style.opacity = 0;
-    textReplyButton.disabled = true;
-
-    // handle textReplyButton Click
-    textReplyButton.addEventListener("click", this.handleTextReplyButtonClick);
-
-    // disable text reply button until it is visible
-    setTimeout(() => {
-      textReplyButton.style.opacity = 1;
-      textReplyButton.disabled = false;
-    }, 4000);
-  }
-
-  handleTextReplyButtonClick() {
-    const diceButton = document.querySelector(".dice-button");
-    diceButton.disabled = false;
-    const textReplyButton = document.querySelector(".text-reply-button");
-    const phoneTextMessageContainer = document.querySelector(
-      ".phone-text-message-container"
-    );
-    phoneTextMessageContainer.remove();
-    gameState.ambientTheme.play();
-    if (gameState.person === "Creepy Pastor Tom") {
-      game.decrementGains(20);
-    }
-    textReplyButton.removeEventListener(
-      "click",
-      game.handleTextReplyButtonClick
-    );
-  }
-
-  createHealthBar() {
-    const healthBar = document.createElement("div");
-    healthBar.classList.add("health-bar");
-    const board = document.querySelector(".board");
-    board.appendChild(healthBar);
-
-    // move health level depending on game state
-    const currentHealthLevel = gameState.health;
-    healthBar.style.height = currentHealthLevel + "%";
-  }
-
-  createGainsBar() {
-    const gainsBar = document.createElement("div");
-    gainsBar.classList.add("gains-bar");
-    const board = document.querySelector(".board");
-    board.appendChild(gainsBar);
-
-    // move gains level depending on game state
-    const currentGainsLevel = gameState.gains;
-    gainsBar.style.height = currentGainsLevel + "%";
-  }
-
-  decrementGains(amt) {
-    gameState.gains -= amt;
-    const gainsBar = document.querySelector(".gains-bar");
-    gainsBar.style.height = gameState.gains + "%";
   }
 
   decrementHealth(amt) {

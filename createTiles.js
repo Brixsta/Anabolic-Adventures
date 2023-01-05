@@ -6,8 +6,6 @@ const createTiles = () => {
     const board = document.querySelector(".board");
     board.appendChild(tile);
 
-    //   tile.innerHTML = i;
-
     if (i > 5 && i < 19 && i !== 9 && i !== 10 && i !== 14 && i !== 15) {
       // turn inner tiles white
       tile.style.backgroundColor = "white";
