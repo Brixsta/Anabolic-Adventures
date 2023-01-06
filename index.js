@@ -8,9 +8,10 @@ import createGainsBar from "./components/createGainsBar.js";
 import highlightActiveTile from "./components/highlightActiveTile.js";
 import createCounterTop from "./components/createCounterTop.js";
 
+// begin infinite loop to check for tile and sprite collision
 window.requestAnimationFrame(highlightActiveTile);
 
-// create layout of the game
+// create game components
 createBoard();
 createTiles();
 createTileTitles();

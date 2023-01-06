@@ -25,6 +25,15 @@ const handleTileEvent = () => {
 
     phone.addEventListener("click", handlePhoneClick);
   }
+  // Arnold Hires Your Mom tile event
+  if (parseInt(activeTile.id) === 5) {
+    gameState.ambientTheme.pause();
+    const sax = new Audio("./audio/sax.wav");
+    sax.currentTime = 0;
+    sax.play();
+    createAlertMessage("Check Your Phone");
+    phone.addEventListener("click", handlePhoneClick);
+  }
 };
 
 export default handleTileEvent;
