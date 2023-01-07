@@ -9,6 +9,8 @@ const handleTextReplyButtonClick = () => {
     ".phone-text-message-container"
   );
   phoneTextMessageContainer.remove();
+  gameState.intervention.pause();
+  gameState.intervention.currentTime = 0;
   gameState.ambientTheme.play();
   if (gameState.person === "Creepy Pastor Tom") {
     decrementGains(20);

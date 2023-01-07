@@ -17,10 +17,12 @@ const createPhoneTextMessage = (person, textMessage) => {
   phoneTextMessageHeader.appendChild(phoneTextMessageMetrics);
 
   // create phone text message time
+  const currentdate = new Date();
   const phoneTextMessageTime = document.createElement("div");
   phoneTextMessageTime.classList.add("phone-text-message-time");
   phoneTextMessageMetrics.appendChild(phoneTextMessageTime);
-  phoneTextMessageTime.innerText = "10:00";
+  phoneTextMessageTime.innerText =
+    currentdate.getHours() + ":" + currentdate.getMinutes();
 
   //create wifi icon
   const phoneTextMessageWifi = document.createElement("div");
@@ -112,7 +114,7 @@ const createPhoneTextMessage = (person, textMessage) => {
 
   setTimeout(() => {
     pop.play();
-  }, 800);
+  }, 700);
 
   const textReplyButton = document.createElement("button");
   textReplyButton.classList.add("text-reply-button");

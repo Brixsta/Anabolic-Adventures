@@ -10,6 +10,8 @@ const handlePhoneClick = () => {
   const phone = document.querySelector(".phone");
   const activeTile = document.querySelector(".active-tile");
 
+  phone.classList.remove("vibrate-phone");
+
   // Arnold Hires Your Mom Tile event
   if (parseInt(activeTile.id) === 5) {
     phone.removeEventListener("click", handlePhoneClick);

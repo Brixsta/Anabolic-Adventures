@@ -1,3 +1,5 @@
+import handleCashAppAcceptButtonClick from "./handleCashAppAcceptButtonClick.js";
+
 const createCashAppMessage = () => {
   const board = document.querySelector(".board");
   const cashAppMessageContainer = document.createElement("div");
@@ -15,10 +17,12 @@ const createCashAppMessage = () => {
   cashAppMessageHeader.appendChild(phoneTextMessageMetrics);
 
   // create phone text message time
+  const currentdate = new Date();
   const phoneTextMessageTime = document.createElement("div");
   phoneTextMessageTime.classList.add("phone-text-message-time");
   phoneTextMessageMetrics.appendChild(phoneTextMessageTime);
-  phoneTextMessageTime.innerText = "10:00";
+  phoneTextMessageTime.innerText =
+    currentdate.getHours() + ":" + currentdate.getMinutes();
 
   //create wifi icon
   const phoneTextMessageWifi = document.createElement("div");
@@ -55,38 +59,64 @@ const createCashAppMessage = () => {
   cashAppHorizontalDots.classList.add("cash-app-horizontal-dots");
   cashAppOptions.appendChild(cashAppHorizontalDots);
 
+  // create content box which the enlarge animation is applied to
+  const cashAppMessageContent = document.createElement("div");
+  cashAppMessageContent.classList.add("cash-app-message-content");
+  cashAppMessageContainer.appendChild(cashAppMessageContent);
+  cashAppMessageContent.style.transform = "scale(0,0)";
+  cashAppMessageContent.style.opacity = 0;
+
   // create cash app avatar
   const cashAppAvatar = document.createElement("div");
   cashAppAvatar.classList.add("cash-app-avatar");
-  cashAppMessageContainer.appendChild(cashAppAvatar);
+  cashAppMessageContent.appendChild(cashAppAvatar);
 
   // create cash app contact name
   const cashAppContactName = document.createElement("span");
   cashAppContactName.classList.add("cash-app-contact-name");
-  cashAppMessageContainer.appendChild(cashAppContactName);
+  cashAppMessageContent.appendChild(cashAppContactName);
   cashAppContactName.innerText = "Arnold Schwarzenegger";
 
   // create cash app payment contact name
   const cashAppPaymentContactName = document.createElement("span");
   cashAppPaymentContactName.classList.add("cash-app-payment-contact-name");
-  cashAppMessageContainer.appendChild(cashAppPaymentContactName);
+  cashAppMessageContent.appendChild(cashAppPaymentContactName);
   cashAppPaymentContactName.innerText = "Payment from $FaithfulArnie69";
 
   // create cash app payment amount
   const cashAppPaymentAmount = document.createElement("span");
   cashAppPaymentAmount.classList.add("cash-app-payment-amount");
-  cashAppMessageContainer.appendChild(cashAppPaymentAmount);
+  cashAppMessageContent.appendChild(cashAppPaymentAmount);
   cashAppPaymentAmount.innerText = "$5000.00";
 
+  // create cash app payment message
   const cashAppPaymentMessage = document.createElement("span");
   cashAppPaymentMessage.classList.add("cash-app-payment-message");
-  cashAppMessageContainer.appendChild(cashAppPaymentMessage);
-  cashAppPaymentMessage.innerHTML = `I'm so Sorry`;
+  cashAppMessageContent.appendChild(cashAppPaymentMessage);
+  cashAppPaymentMessage.innerHTML = `I'm so Sorry..`;
 
+  // create cash app accept button
   const cashAppAcceptButton = document.createElement("button");
   cashAppAcceptButton.classList.add("cash-app-accept-button");
-  cashAppMessageContainer.appendChild(cashAppAcceptButton);
+  cashAppMessageContent.appendChild(cashAppAcceptButton);
   cashAppAcceptButton.innerHTML = "WTF Arnie";
+  cashAppAcceptButton.style.opacity = 0;
+  cashAppAcceptButton.disabled = true;
+
+  // create cash app message sound
+  const pop = new Audio("./audio/pop.wav");
+
+  setTimeout(() => {
+    pop.play();
+  }, 700);
+
+  // disable text reply button until it is visible
+  setTimeout(() => {
+    cashAppAcceptButton.style.opacity = 1;
+    cashAppAcceptButton.disabled = false;
+  }, 3000);
+
+  cashAppAcceptButton.addEventListener("click", handleCashAppAcceptButtonClick);
 };
 
 export default createCashAppMessage;
