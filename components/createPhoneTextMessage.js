@@ -1,4 +1,5 @@
 import handleTextReplyButtonClick from "./handleTextReplyButtonClick.js";
+import getTime from "./getTime.js";
 
 const createPhoneTextMessage = (person, textMessage) => {
   const board = document.querySelector(".board");
@@ -21,8 +22,7 @@ const createPhoneTextMessage = (person, textMessage) => {
   const phoneTextMessageTime = document.createElement("div");
   phoneTextMessageTime.classList.add("phone-text-message-time");
   phoneTextMessageMetrics.appendChild(phoneTextMessageTime);
-  phoneTextMessageTime.innerText =
-    currentdate.getHours() + ":" + currentdate.getMinutes();
+  phoneTextMessageTime.innerText = getTime();
 
   //create wifi icon
   const phoneTextMessageWifi = document.createElement("div");
@@ -130,7 +130,7 @@ const createPhoneTextMessage = (person, textMessage) => {
   setTimeout(() => {
     textReplyButton.style.opacity = 1;
     textReplyButton.disabled = false;
-  }, 4000);
+  }, 2000);
 };
 
 export default createPhoneTextMessage;

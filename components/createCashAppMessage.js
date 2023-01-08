@@ -1,4 +1,5 @@
 import handleCashAppAcceptButtonClick from "./handleCashAppAcceptButtonClick.js";
+import getTime from "./getTime.js";
 
 const createCashAppMessage = () => {
   const board = document.querySelector(".board");
@@ -21,8 +22,7 @@ const createCashAppMessage = () => {
   const phoneTextMessageTime = document.createElement("div");
   phoneTextMessageTime.classList.add("phone-text-message-time");
   phoneTextMessageMetrics.appendChild(phoneTextMessageTime);
-  phoneTextMessageTime.innerText =
-    currentdate.getHours() + ":" + currentdate.getMinutes();
+  phoneTextMessageTime.innerText = getTime();
 
   //create wifi icon
   const phoneTextMessageWifi = document.createElement("div");
@@ -114,7 +114,7 @@ const createCashAppMessage = () => {
   setTimeout(() => {
     cashAppAcceptButton.style.opacity = 1;
     cashAppAcceptButton.disabled = false;
-  }, 3000);
+  }, 2000);
 
   cashAppAcceptButton.addEventListener("click", handleCashAppAcceptButtonClick);
 };

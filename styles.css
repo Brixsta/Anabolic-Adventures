@@ -219,7 +219,7 @@
 
 .phone-text-message-time {
   height: 100%;
-  width: 50px;
+  width: 80px;
   background-color: white;
   display: flex;
   justify-content: center;
@@ -633,4 +633,5 @@
     transform: rotate(360deg);
   }
 }
+
 /* ///////////// End of Animations ///////////// */

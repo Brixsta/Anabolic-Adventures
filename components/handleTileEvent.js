@@ -1,36 +1,25 @@
 import gameState from "./gameState.js";
-import vibratePhone from "./vibratePhone.js";
-import allTransparentButPhone from "./allTransparentButPhone.js";
-import createAlertMessage from "./createAlertMessage.js";
-import handlePhoneClick from "./handlePhoneClick.js";
+import determineLastTileId from "./determineLastTileId.js";
+import arnoldHiresYourMom from "./arnoldHiresYourMom.js";
+import lowOnPreWorkout from "./lowOnPreWorkout.js";
+import joeRogan from "./JoeRogan.js";
 
 const handleTileEvent = () => {
+  determineLastTileId();
   const diceButton = document.querySelector(".dice-button");
   diceButton.disabled = false;
-  const phone = document.querySelector(".phone");
-  const activeTile = document.querySelector(".active-tile");
 
   // Pre-Workout tile event
-  if (parseInt(activeTile.id) === 23) {
-    gameState.intervention.currentTime = 0;
-    const textMessage = `I'm worried about you. I talked with God and he said you were sufferring from NO-XPLODE dependency. I know it feels like all hope is lost. Call me immediately before the pre-workout demons ravage your sinful soul. Jesus loves you!`;
-    gameState.textMessage = textMessage;
-    gameState.person = "Creepy Pastor Tom";
-    gameState.ambientTheme.pause();
-    gameState.intervention.play();
-    vibratePhone();
-    allTransparentButPhone();
-    createAlertMessage("Check Your Phone");
-    phone.addEventListener("click", handlePhoneClick);
+  if (gameState.lastTileId === 23) {
+    lowOnPreWorkout();
   }
   // Arnold Hires Your Mom tile event
-  if (parseInt(activeTile.id) === 5) {
-    gameState.ambientTheme.pause();
-    gameState.sax.play();
-    vibratePhone();
-    allTransparentButPhone();
-    createAlertMessage("Check Your Phone");
-    phone.addEventListener("click", handlePhoneClick);
+  if (gameState.lastTileId === 5) {
+    arnoldHiresYourMom();
+  }
+  // DMT w/ Joe Rogan tile event
+  if (gameState.lastTileId === 15) {
+    joeRogan();
   }
 };
 
