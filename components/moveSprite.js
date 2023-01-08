@@ -9,7 +9,7 @@ const moveSprite = () => {
   }
 
   const sprite = document.querySelector(".sprite");
-
+  sprite.classList.add("sprite-moving");
   let spriteX = sprite.style.right;
   let spriteY = sprite.style.bottom;
 

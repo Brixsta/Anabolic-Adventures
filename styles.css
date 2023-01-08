@@ -80,8 +80,11 @@
   height: 50px;
   width: 50px;
   background-color: yellow;
-  transition: all 0.5s ease;
   z-index: 2500;
+}
+
+.sprite-moving {
+  transition: all 0.5s ease;
 }
 
 .counter-top {

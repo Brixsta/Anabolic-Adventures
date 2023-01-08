@@ -5,6 +5,10 @@ import lowOnPreWorkout from "./lowOnPreWorkout.js";
 import joeRogan from "./JoeRogan.js";
 
 const handleTileEvent = () => {
+  // remove moving class from sprite incase the player alt-tabs
+  const sprite = document.querySelector(".sprite");
+  sprite.classList.remove("sprite-moving");
+
   determineLastTileId();
   const diceButton = document.querySelector(".dice-button");
   diceButton.disabled = false;

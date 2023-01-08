@@ -17,8 +17,8 @@ const rollDice = () => {
   // gameState.movesLeft = firstRandomNumber + SecondRandomNumber;
   // gameState.initialRoll = firstRandomNumber + SecondRandomNumber;
 
-  gameState.movesLeft = 5;
-  gameState.initialRoll = 5;
+  gameState.movesLeft = 25;
+  gameState.initialRoll = 25;
 
   playRandomVoiceLine();
 
