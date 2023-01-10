@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Alexandria&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alexandria&family=Kalam&family=Roboto&display=swap");
 
 * {
   margin: 0;
@@ -139,6 +139,10 @@
   background-color: transparent;
   background-repeat: no-repeat;
   transition: opacity 200ms ease-in;
+}
+
+.journal:hover {
+  cursor: pointer;
 }
 
 .dice-button {
@@ -434,6 +438,49 @@
 }
 
 /* ///////////// End of Phone Text Message ///////////// */
+
+/* ///////////// Start of Journal Entry ///////////// */
+
+.journal-entry-container {
+  height: 480px;
+  width: 480px;
+  background-color: white;
+  position: absolute;
+  left: 160px;
+  top: 160px;
+  border: solid 1px black;
+  background-image: url("./images/journal-paper.png");
+}
+
+.journal-date {
+  position: absolute;
+  top: 32px;
+  right: 20px;
+  font-size: 20px;
+  font-family: "Kalam", cursive;
+}
+
+.journal-entry-title {
+  position: absolute;
+  top: 80px;
+  left: 75px;
+  font-size: 50px;
+  font-family: "Kalam", cursive;
+}
+
+.journal-entry-content {
+  position: absolute;
+  top: 164px;
+  left: 75px;
+  font-size: 20px;
+  font-family: "Kalam", cursive;
+  /* border: solid 1px rgb(179, 179, 179); */
+  height: 300px;
+  width: 360px;
+  line-height: 26px;
+}
+
+/* ///////////// End of Journal Entry ///////////// */
 
 /* ///////////// Start of Cash App Message ///////////// */
 .cash-app-message-container {
